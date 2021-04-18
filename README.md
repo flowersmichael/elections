@@ -7,7 +7,7 @@
 - Analyzing Data through graphs and apply deep-learning neural networks. Refer to [Final Project Video](https://apple.box.com/shared/static/2bxkpq4rsgnuwto5ayy4syl222z79otu.m4v) for details.
 - Training the Model with 1 hidden layer([NeuralNetwork_1hiddenlayer1.ipynb](../hiep/NeuralNetwork_1hiddenlayer.ipynb)) from  [senate_dataset.csv](../hiep/Resources/senate_dataset.csv). Refer to test result below:
   ![alt text](../hiep/NeuralNetwork_1hiddenlayer.png) 
-- Add second hidden layer to increase model performance([NeuralNetwork_2hiddenlayers.ipynb](../hiep/NeuralNetwork_2hiddenlayers.ipynb)). Refer to test result below:
+- Add second hidden layer to improve([NeuralNetwork_2hiddenlayers.ipynb](../hiep/NeuralNetwork_2hiddenlayers.ipynb)). Refer to test result below:
   ![alt text](../hiep/NeuralNetwork_2hiddenlayers.png) 
   
  ## Summary
