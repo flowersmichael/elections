@@ -1,6 +1,6 @@
 # elections
 ## First Segment Project Deliverable
-- Write a python script to import elections datasets, then analyzing Data through graphs and apply deep-learning neural networks to analyze elections. Refer to [FinaProjects.ipynb](../main/FinaProjects.ipynb) and [FinaProjects.py](../main/FinaProjects.py)
+- Write a python script to import elections datasets, then analyzing Data through graphs and apply deep-learning neural networks to analyze elections. Refer to [FinaProjects.ipynb](../hiep/FinaProjects.ipynb) and [FinaProjects.py](../hiep/FinaProjects.py)
 
 ## Challenge
 - Run python script to import elections datasets([CostOfElection.csv](../main/Resources/CostOfElection.csv), [president_counties.csv](../main/Resources/president_counties.csv), [president_dataset.csv](../main/Resources/president_dataset.csv), and  [senate_dataset.csv](../main/Resources/senate_dataset.csv)
