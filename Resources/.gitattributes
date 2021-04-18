@@ -1,0 +1,2 @@
+fec-independent-expenditures.csv filter=lfs diff=lfs merge=lfs -text
+1976-2020-senate.csv filter=lfs diff=lfs merge=lfs -text
