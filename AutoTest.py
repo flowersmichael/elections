@@ -41,22 +41,31 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import sys
 import glob
+import glob2
 import os.path
 from pathlib import Path
 import fnmatch
+import PyPDF2
+from PyPDF2 import PdfFileMerger, PdfFileReader
 from simple_colors import * # pip install simple-colors
 import warnings #fixed any warning in terminal
 from pandas.api.types import is_string_dtype
 from pandas.api.types import is_numeric_dtype
 import matplotlib.ticker as mtick
 from matplotlib import ticker
+from matplotlib.backends.backend_pdf import PdfPages
+import warnings #fixed any warning in terminal
+import matplotlib.cbook
+# Ignore DtypeWarnings from pandas' read_csv
+warnings.filterwarnings('ignore', message="^Columns.*")
+warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 
-# In[ ]:
+# In[2]:
 
 
 def epi6():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df1 = df.drop(['state_abbv', 'state_fips', 'website_reg_status', 'website_provisional_status', 'online_reg'],axis=1)
     df1 = df1.fillna(0)
     # the last column is our label
@@ -70,7 +79,7 @@ def epi6():
     model = RandomForestRegressor(max_depth=5, random_state=1, n_estimators=1000).fit(X_train, y_train)
     y_pred = model.predict(X_train)
     prediction = pd.DataFrame({'state':df.state_abbv,'Actual':df1.vep_turnout, 'Prediction': y_pred})
-    print(prediction)
+    #print(prediction)
     table_count = prediction.groupby(prediction['state'])['Actual', 'Prediction'].sum() 
     table_count = table_count.sort_values(by='Prediction', ascending=True)[:10]
     word = [table_count]
@@ -82,14 +91,16 @@ def epi6():
     plt.ylabel('State')
     plt.xlabel('VEP Turnout Rate')
     ax.set_title("Predict Top Ten VEP Turnout By State")
-    plt.show()
+    plt.savefig(results_dir + file_name + "_6" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 6 is done!")
 
 
-# In[ ]:
+# In[3]:
 
 
 def epi5():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     table_count = df.groupby(df['state_abbv'])['vep_turnout'].sum()
     table_count = table_count.sort_values(ascending=False)[:10]
     payee_index = table_count.index
@@ -103,14 +114,16 @@ def epi5():
     plt.ylabel('State')
     plt.xlabel('VEP Turnout Rate')
     ax.set_title("Top Ten VEP Turnout By State (2008 - 2018)")
-    plt.show()
+    plt.savefig(results_dir + file_name + "_5" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 5 is done!")
 
 
-# In[ ]:
+# In[4]:
 
 
 def epi4():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     table_count = df.groupby(df['state_abbv'])['uocava_rej'].sum()
     table_count = table_count.sort_values(ascending=False)[:10]
     payee_index = table_count.index
@@ -124,14 +137,16 @@ def epi4():
     plt.ylabel('State')
     plt.xlabel('UOCAVA ballot Rejection Rate')
     ax.set_title("Top Ten UOCAVA Ballot Rejection by State (2008 -2018)")
-    plt.show()
+    plt.savefig(results_dir + file_name + "_4" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 4 is done!")
 
 
-# In[ ]:
+# In[5]:
 
 
 def epi3():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     table_count = df.groupby(df['state_abbv'])['prov_rej_all'].sum()
     table_count = table_count.sort_values(ascending=False)[:10]
     payee_index = table_count.index
@@ -145,14 +160,16 @@ def epi3():
     plt.ylabel('State')
     plt.xlabel('Provisional ballot Rejection Rate')
     ax.set_title("Top Ten Provisional Ballot Rejection by State (2008 -2018)")
-    plt.show()
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 3 is done!")
 
 
-# In[ ]:
+# In[6]:
 
 
 def epi2():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     table_count = df.groupby(df['state_abbv'])['abs_rej_all_ballots'].sum()
     table_count = table_count.sort_values(ascending=False)[:10]
     payee_index = table_count.index
@@ -166,14 +183,16 @@ def epi2():
     plt.ylabel('State')
     plt.xlabel('Absentee ballot Rejection Rate')
     ax.set_title("Top Ten Absentee Ballot Rejection by State (2008 -2018)")
-    plt.show()
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
 
 
-# In[2]:
+# In[7]:
 
 
 def nn2_2layers():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     columns = ['report_year', 'expenditure_amount', 'category_code_full', 'support_oppose_indicator', 'candidate_name', 'cand_office_state', 'cand_office_district', 'election_type']
     df = df[columns]
     df = df.dropna()
@@ -238,11 +257,11 @@ def nn2_2layers():
     nn.save("independent_expenditures.h5")
 
 
-# In[3]:
+# In[8]:
 
 
 def r2_2layers():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     columns = ['report_year', 'image_number', 'file_number', 'payee_name', 'expenditure_date', 'dissemination_date', 'expenditure_amount', 'category_code_full', 'support_oppose_indicator', 'candidate_id', 'candidate_name', 'cand_office_state', 'cand_office_district', 
     'election_type', 'sub_id']
     df = df[columns]
@@ -296,11 +315,11 @@ def r2_2layers():
     print(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}")
 
 
-# In[4]:
+# In[9]:
 
 
 def expenditures_6():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     #Trump
     df1 = df[df['candidate_name'].notna()]
     support =['S','SUP']
@@ -330,14 +349,16 @@ def expenditures_6():
     plt.annotate(f"Total Trump Support: {total_trump}", xy=(0.5, 0.6), fontsize=12, xycoords='axes fraction', bbox=props)
     plt.ylabel('Support Rate')
     plt.xlabel('Candidate')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_6" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 6 is done!")
 
 
-# In[5]:
+# In[10]:
 
 
 def expenditures_5():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df = df[df['candidate_name'].notna()]
     support =['S','SUP']
     words = ["BIDEN", "Biden"]
@@ -358,14 +379,16 @@ def expenditures_5():
     plt.annotate("Number of contributor Supporting Biden by state", xy=(0.3, 0.5), fontsize=12, xycoords='axes fraction', bbox=props)
     plt.ylabel('State')
     plt.xlabel('Count')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_5" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 5 is done!")
 
 
-# In[6]:
+# In[11]:
 
 
 def expenditures_4():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df = df[df['candidate_name'].notna()]
     support =['S','SUP']
     words = ["TRUMP", "Trump"]
@@ -381,14 +404,16 @@ def expenditures_4():
     plt.annotate("Number of contributor Supporting Trump by state", xy=(0.2, 0.5), fontsize=12, xycoords='axes fraction', bbox=props)
     plt.ylabel('State')
     plt.xlabel('Count')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_4" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 4 is done!")
 
 
-# In[7]:
+# In[12]:
 
 
 def expenditures_3():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     table_count = df.groupby(df.category_code_full)['expenditure_amount'].sum()
     table_count = table_count.sort_values(ascending=False)[:10]
     category_code_idx = table_count.index
@@ -399,14 +424,16 @@ def expenditures_3():
     plt.annotate("Top Ten Category vs Expenditure Amount", xy=(0.3, 0.5), fontsize=15, xycoords='axes fraction', bbox=props)
     plt.ylabel('Category')
     plt.xlabel('Expenditure Amount')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 3 is done!")
 
 
-# In[8]:
+# In[13]:
 
 
 def expenditures_2():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     table_count = df.groupby(df['payee_name'])['expenditure_amount'].sum()
     table_count = table_count.sort_values(ascending=False)[:10]
     payee_index = table_count.index
@@ -416,27 +443,28 @@ def expenditures_2():
     plt.annotate("Top Ten Payee", xy=(0.5, 0.5), fontsize=15, xycoords='axes fraction', bbox=props)
     plt.ylabel('Payee Name')
     plt.xlabel('Expenditure Amount')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
 
 
-# In[9]:
+# In[14]:
 
 
-def senate_predict():
-    while True:
-        df = pd.read_csv(csv_file)
-        df = df.dropna()
-        df= df[df['Results'] != 0]
-        df.rename(columns = {'party_simplified' : 'winning_party'},inplace = True)
-        try:
-            state = input("Please enter the STATE to predict: ").strip().upper()   
+def senate_predict():  
+    states = ["GA", "SC", "OH", "CO", "PA", "AZ", "CA"]
+    with PdfPages(results_dir + file_name + "_Prediction" + ".pdf") as pdf:     
+        for state in states:
+            df = pd.read_csv(path + csv_file)
+            df = df.dropna()
+            df= df[df['Results'] != 0]
+            df.rename(columns = {'party_simplified' : 'winning_party'},inplace = True)
             df = df.loc[df.state_po == state]   
             #print(red("Typo! Please try again."))
             columns = ['state_po', '_year', 'candidatevotes', 'totalvotes','winning_party']
             df = df[columns]    
             #print(f"Here's {state} DataFrame {df}"'\n')
-            print(df)
-
+            #print(df)
             #FIRST PREDICTION
             ##the last column is our label
             y_train = df.totalvotes.values
@@ -444,106 +472,46 @@ def senate_predict():
             X_train = df.drop(['winning_party', 'state_po'], axis=1)
             #drop first colum of data
             X_test = df.drop(['winning_party', 'state_po', '_year'], axis=1)
-            from sklearn.ensemble import RandomForestRegressor
             model = RandomForestRegressor(max_depth=5, random_state=1, n_estimators=1000).fit(X_train, y_train)
             y_pred = model.predict(X_train)
             new_pred = y_pred[-1]
             prediction = pd.DataFrame({'State':df.state_po,'Last_Election':df.totalvotes, 'Next_Election_Pred': y_pred.astype(int)}, index=None)
             prediction = prediction.iloc[[-1]]
-            print (prediction.to_string(index=False))
-            y = df.totalvotes.values
-            #drop last column of data
-            X = df.drop(['winning_party', 'state_po'], axis=1)
-            X_train, X_test, y_train, y_test = train_test_split(X,y, random_state=1, test_size=0.01) #0.2 means only 20% sample
-            X_train.shape, X_test.shape, y_train.shape, y_test.shape
-            model = RandomForestRegressor(max_depth=5, random_state=1, n_estimators=1000).fit(X_train, y_train)
-            y_pred = model.predict(X_train).astype(int)
-            #print(blue(f"Predict_Score of {state}: {model.score(X_train, y_train)}"))
-            total_votes_pred = y_pred[-1]
-            total_votes_pred
-
-             #SECOND PREDICTION
-            df.winning_party = df. winning_party.replace({'DEMOCRAT': 1, 'REPUBLICAN': 2, 'LIBERTARIAN': 3, 'OTHER': 4})
-            # the last column is our label
-            y = df.winning_party.values
-            #drop last column of data
-            X = df.drop(['winning_party', 'state_po'], axis=1)
-            X_train, X_test, y_train, y_test = train_test_split(X,y, random_state=1, test_size=0.01) #0.2 means only 20% sample
-            #print(X_train.shape)
-            model2 = RandomForestRegressor(max_depth=5, random_state=1, n_estimators=1000).fit(X_train, y_train)
-            y_pred = model2.predict(X_train)
-            #print(len(y_pred))
-            print(blue(f"Predict_Score of {state}: {model2.score(X_train, y_train)}"))
-            #print(y_pred)
-        except ValueError:
-            print(red("Typo! Please try again."'\n'))
-            break
-
-        lst1 = [x for x in y_train[-20:] if x == 1] 
-        dem = len(lst1)
-        lst2 = [x for x in y_train[-20:] if x == 2] 
-        rep = len(lst2)
-        lst3 = [x for x in y_train[-20:] if (x ==3)] 
-        lib = len(lst3)
-        lst4 = [x for x in y_train[-20:] if (x != 1 and x !=2 and x !=3)] 
-        other = len(lst4)
-        if other > dem and other > rep:
-            print_pred = f"Predict OTHER will win in {state}"
-            print(green(f"Predict OTHER will win in {state} next Election."))
-        elif dem > rep and dem >= other:      
-            print_pred = f"Predict SENATE DEMOCRAT will win in {state}"
-            print(blue(f"Predict SENATE DEMOCRAT will win in {state} next Election."))
-        elif rep >= dem and rep >= other:
-            print_pred = f"Predict SENATE REPUBLICAN will win in {state}"
-            print(red(f"Predict SENATE REPUBLICAN will win in {state} next Election."))
-        #print(dem, rep, lib, other)
-
-        #First Plot
-        word = [""]
-        old_votes = df['totalvotes'].iloc[-1]
-        df1 = pd.DataFrame({"Next_Election_Pred_Votes": new_pred, "Last_Elecction_Votes": old_votes}, index=word) 
-        props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
-        df1.plot.barh()
-        plt.annotate(f"{prediction.to_string(index=False)}", xy=(0.25, 0.05), fontsize=11, xycoords='axes fraction', bbox=props)
-        plt.annotate(print_pred, xy=(0.25, 0.18), fontsize=11, xycoords='axes fraction', bbox=props)
-        plt.xlabel('Total Votes')
-        plt.title(f"Next Senate Elections Predictions in {state}")
-        plt.show()
-
-        #Second Plot
-        try:
-            a = [int(x) for x in input("Enter a list[year, candidatevotes, totalvotes] to test the prediction: ").split()]
-        except:
-            print(red("Typo! Please try again."'\n'))
-            break
-        if a == []:
-            print(red("Typo! Please try again."'\n'))
-            break
-        old_year = df['_year'].iloc[-1]
-        new_year = a[0]
-        new_votes = a[2]
-        test_prediction = model2.predict([a])
-        word = [""]
-        old_votes = df['totalvotes'].iloc[-1]
-        df = pd.DataFrame({f"{new_year}_PredictTotalVotes": new_votes, f"{old_year}_TotalVotes": old_votes}, index=word) 
-        props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
-        df.plot.barh()
-        if test_prediction < [1.5]:
-            plt.annotate(f"Predict SENATE DEMOCRAT will win in {state}", xy=(0.25, 0.1), fontsize=11, xycoords='axes fraction', bbox=props)
-        elif test_prediction > [1.5]:
-            plt.annotate(f"Predict SENATE PUBLICAN will win in {state}", xy=(0.2, 0.1), fontsize=11, xycoords='axes fraction', bbox=props)
-        else:
-            plt.annotate(f"Predict Other will win in {state}", xy=(0.2, 0.1), fontsize=11, xycoords='axes fraction', bbox=props)
-        plt.xlabel('Total Votes')
-        plt.title(f"{new_year} Senate Elections Predictions in {state}")
-        plt.show()
+            #print (prediction.to_string(index=False))
+            
+            lst1 = [x for x in df.winning_party if x == 'DEMOCRAT'] 
+            dem = len(lst1)
+            lst2 = [x for x in df.winning_party if x == 'REPUBLICAN'] 
+            rep = len(lst2)
+            if dem > rep:      
+                print_pred = f"Predict SENATE DEMOCRAT will win in {state}"
+                #print(blue(f"Predict SENATE DEMOCRAT will win in {state} next Election."))
+            elif rep > dem:
+                print_pred = f"Predict SENATE REPUBLICAN will win in {state}"
+                #print(red(f"Predict SENATE REPUBLICAN will win in {state} next Election."))
+            else:
+                print_pred = f"Predict OTHER will win in {state}"
+                #print(green(f"Predict OTHER will win in {state} next Election."))
+            
+            word = [""]
+            old_votes = df['totalvotes'].iloc[-1]
+            df1 = pd.DataFrame({"Next_Election_Pred_Votes": new_pred, "Last_Elecction_Votes": old_votes}, index=word) 
+            props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+            df1.plot.barh()
+            plt.annotate(f"{prediction.to_string(index=False)}", xy=(0.25, 0.05), fontsize=11, xycoords='axes fraction', bbox=props)
+            plt.annotate(print_pred, xy=(0.25, 0.18), fontsize=11, xycoords='axes fraction', bbox=props)
+            plt.xlabel('Total Votes')
+            plt.title(f"Next Senate Elections Predictions in {state}")
+            pdf.savefig()    
+            plt.close()
+    print(f"{file_name} is done!")
 
 
-# In[10]:
+# In[15]:
 
 
 def nn_2layers():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     #Create category_columns and numeric_columns variables
     numeric_columns = []
     category_columns = []
@@ -588,16 +556,17 @@ def nn_2layers():
     y_train_pred = nn.predict(X_train_scaled)
     y_test_pred = nn.predict(X_test_scaled)
     # score the training predictions with r2_score()
-    print(f"r2_score of y_train: {r2_score(y_train, y_train_pred)}")
+    print(blue(f"r2_score of y_train: {r2_score(y_train, y_train_pred)}"))
     # score the test predictions with r2_score()
-    print(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}")
+    print(blue(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}"))
+    print("neural network model with 2 hidden layers is done!")
 
 
-# In[11]:
+# In[26]:
 
 
 def nn_1layer():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     #Create category_columns and numeric_columns variables
     numeric_columns = []
     category_columns = []
@@ -641,17 +610,18 @@ def nn_1layer():
     y_train_pred = nn.predict(X_train_scaled)
     y_test_pred = nn.predict(X_test_scaled)
     # score the training predictions with r2_score()
-    print(f"r2_score of y_train: {r2_score(y_train, y_train_pred)}")
+    print(red(f"r2_score of y_train: {r2_score(y_train, y_train_pred)}"))
     # score the test predictions with r2_score()
-    print(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}")
+    print(red(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}"))
+    print("neural network model with 1 hidden layer is done!")
 
 
-# In[12]:
+# In[17]:
 
 
 def predict_2():
     from sklearn.ensemble import RandomForestRegressor
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df = df[df.loc[:] != 'LIB'].dropna()
     df = df.drop(df.columns[0], axis=1)
     df.party = df.party.replace({'DEM': 1, 'REP': 2})
@@ -664,18 +634,19 @@ def predict_2():
     X_test = dataset.iloc[:,1:]
     model = RandomForestRegressor(max_depth=5, random_state=1, n_estimators=1000).fit(X_train, y_train)
     y_pred = model.predict(X_train)
-    print(y_pred)
-    print(f"Predict_Score: {model.score(X_train, y_train)}")
+    #print(y_pred)
+    #print(f"Predict_Score: {model.score(X_train, y_train)}")
     prediction = pd.DataFrame({'state':df.state,'party':df.party, 'prediction_2024': y_pred.astype(int)})
     my_colors = list(islice(cycle(['b', 'r']), None, len(prediction)))
     prediction.party = prediction.party.map({1: 'DEM', 2: 'REP'})
     prediction.groupby('party')['prediction_2024'].sum().plot.bar(ylabel= "candidatevotes", title="2024 Party Prediction", color=my_colors)
     predict_winner = prediction.groupby('party')['prediction_2024'].sum()
-    print(predict_winner)
-    plt.show()
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
 
 
-# In[13]:
+# In[18]:
 
 
 def minority_2(): 
@@ -685,7 +656,7 @@ def minority_2():
     import plotly as py
 
     NE_states = ['Georgia', 'South Carolina']
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df = df[df['STNAME'].isin(NE_states)]
 
     values = df['TOT_POP'].tolist()
@@ -716,13 +687,12 @@ def minority_2():
     )
 
     fig.layout.template = None
-    fig.show()
-    py.offline.plot(fig,
-    filename='Georgia vs South Carolina.html',
-    include_plotlyjs='https://cdn.plot.ly/plotly-1.42.3.min.js')
+    fig.write_image(results_dir + file_name + "_2" + ".pdf") #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
 
 
-# In[14]:
+# In[19]:
 
 
 def county_4():
@@ -730,7 +700,7 @@ def county_4():
     import plotly as py
     import json
     import webbrowser
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     #df['fips'] = df['fips'].apply(lambda x: '0'+x if len(x) == 4 else x)
     with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
         counties = json.load(response)
@@ -750,28 +720,29 @@ def county_4():
                 visible=True)                      
     fig.update_layout(title= {"text": "Georgia vs South Carolina & Florida'\n' 2020 swing states total_votes", "xanchor": "center", "x": 0.5, "y": 0.95}, 
         margin={"r":0,"t":0,"l":0,"b":0}, showlegend=False)
-    fig.show()
-    fig.write_html("myplot.html")
-    url = 'file://file:///Users/hiep_pham/Desktop/Analysis_Projects/Final_Project/myplot.html'
-    webbrowser.open(url, new=2)  # open in new tab
+    fig.write_image(results_dir + file_name + "_4" + ".pdf") #single figure(3) 
+    plt.close()
+    print(f"{file_name} 4 is done!")
 
 
-# In[15]:
+# In[20]:
 
 
 def county_3():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     plt.scatter(df.median_age,df.total_votes)
     plt.xlabel("median_age")
     plt.ylabel('Total_Votes')
     plt.title("median_age vs Total_Votes")
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
 
 
-# In[16]:
+# In[21]:
 
 
 def county_2():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     y = df.total_votes
     X = df.population.values.reshape(-1, 1)
     model = LinearRegression().fit(X, y)
@@ -781,13 +752,16 @@ def county_2():
     plt.xlabel("Population")
     plt.ylabel('Total_Votes')
     plt.title("Population vs Total_Votes'\n' Linear Regression")
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
 
 
-# In[17]:
+# In[22]:
 
 
 def cost_3():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df = df[['year','House winner spending', 'Senate winner spending']] 
     df = df.sort_values(by='year', ascending=True)
     df.plot(
@@ -796,14 +770,16 @@ def cost_3():
     stacked = True, 
     title = 'House winner vs. Senate winner Spending',)
     plt.xlabel('Spending')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 3 is done!")
 
 
-# In[18]:
+# In[23]:
 
 
 def cost_2():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     df = df[['year','Democrats', 'Republicans']] 
     df = df.sort_values(by='year', ascending=True)
     df.plot(
@@ -812,164 +788,78 @@ def cost_2():
     stacked = True, 
     title = 'Democrats vs. Republican Spending',)
     plt.xlabel('Spending')
-    plt.show()
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
 
 
-# In[19]:
+# In[24]:
 
 
 def df():
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(path + csv_file)
     print(df)
 
 
-# In[20]:
+# In[ ]:
 
 
-while True:
-       plt.close()
-       csv_file = input("Import CSV_file to analyze: ").strip()
-       file_name1 = os.path.split(os.path.abspath(csv_file))[-1] 
-       if len(csv_file) < 2: #hit enter to quit csv files while loop(enter is len = 1) 
-              break  
-       elif not file_name1.endswith('csv'):
-              continue  # ignore it if not csv files
-       file_name, file_extension = os.path.splitext(file_name1)   
-       list1 = ["Option 1: Print Data Frame",
-              "Option 2: Democrats vs. Republican Spending",
-              "Option 3: House winner vs. Senate winner Spending"
-              ]
-       list2 = ["Option 1: Print Data Frame",
-              "Option 2: Population vs Total_Votes & Linear Regression",
-              "Option 3: Median Age vs Total_Votes",
-              "Option 4: 2020 swing states total_votes(Georgia vs South Carolina & Florida)",
-              ]
-       list3 = ["Option 1: Print Data Frame",
-              "Option 2: Georgia vs South Carolina Population",
-              ]
-       list4 = ["Option 1: Print Data Frame",
-              "Option 2: 2024 Party Prediction (Randomforestclassifier)",
-              ]
-       list5 = ["Option 1: Print Data Frame",
-              "Option 2: neural network with 1 hidden layer",
-              "Option 3: neural network with 2 hidden layers",
-              "Option 4: Senate Elections Predictions By State",
-              ]
-       list6 = ["Option 1: Print Data Frame",
-              "Option 2: Top Ten Payeer",
-              "Option 3: Top Ten Category vs Expenditure Amount",
-              "Option 4: Number of contributor Supporting Trump by state",
-              "Option 5: Number of contributor Supporting Biden by state",
-              "Option 6: Trump vs Biden Supporting Rate",
-              "Option 7: neural network with 2 hidden layers",
-              ]
-       list7 = ["Option 1: Print Data Frame",
-              "Option 2: Top Ten Absentee Ballot Rejection by State",
-              "Option 3: Top Ten Provisional Ballot Rejection by State",
-              "Option 4: Top Ten UOCAVA Ballot Rejection by State",
-              "Option 5: Top Ten VEP Turnout By State ",
-              "Option 6: Predict Top Ten VEP Turnout By State",
-              ]
-       while True and len(file_name) > 2:
-              if file_name.find('CostOf') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list1,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              elif file_name.find('president_counties') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list2,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              elif file_name.find('minority') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list3,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              elif file_name.find('president_dataset') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list4,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              elif file_name.find('senate_dataset') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list5,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              elif file_name.find('independent_expenditures') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list6,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              elif file_name.find('epi') != -1:
-                     print(blue(f"The following options are available for {file_name1}:"))
-                     print(*list7,sep='\n')
-                     func = input("Please input the option #: ")
-                     print("")
-              
-              if func == "": #hit enter to quit function while loop(enter is len = 1) 
-                     break
-              elif func not in ("1", "2", "3", "4", "5", '6','7'):
-                     print(red("Typo! Please try again."))
-              if func == "1" and file_name.find('CostOf') != -1:
-                     df()
-              elif func == "2" and file_name.find('CostOf') != -1:
-                     cost_2()
-              elif func == "3" and file_name.find('CostOf') != -1:
-                     cost_3()
-              elif func == "1" and file_name.find('president_counties') != -1:
-                     df()       
-              elif func == "2" and file_name.find('president_counties') != -1:
-                     county_2()
-              elif func == "3" and file_name.find('president_counties') != -1:
-                     county_3()
-              elif func == "4" and file_name.find('president_counties') != -1:
-                     county_4()
-              elif func == "1" and file_name.find('minority') != -1:
-                     df()
-              elif func == "2" and file_name.find('minority') != -1:
-                     minority_2()
-              elif func == "1" and file_name.find('president_dataset') != -1:
-                     df()
-              elif func == "2" and file_name.find('president_dataset') != -1:
-                     predict_2()
-              elif func == "1" and file_name.find('senate_dataset') != -1:
-                     df()
-              elif func == "2" and file_name.find('senate_dataset') != -1:
-                     nn_1layer()
-              elif func == "3" and file_name.find('senate_dataset') != -1:
-                     nn_2layers()
-              elif func == "4" and file_name.find('senate_dataset') != -1:
-                     senate_predict()
-              elif func == "1" and file_name.find('independent_expenditures') != -1:
-                     df()
-              elif func == "2" and file_name.find('independent_expenditures') != -1:
-                     expenditures_2()
-              elif func == "3" and file_name.find('independent_expenditures') != -1:
-                     expenditures_3()
-              elif func == "4" and file_name.find('independent_expenditures') != -1:
-                     expenditures_4()
-              elif func == "5" and file_name.find('independent_expenditures') != -1:
-                     expenditures_5()
-              elif func == "6" and file_name.find('independent_expenditures') != -1:
-                     expenditures_6()
-              elif func == "7" and file_name.find('independent_expenditures') != -1:
-                     r2_2layers()
-              elif func == "1" and file_name.find('epi') != -1:
-                     df()
-              elif func == "2" and file_name.find('epi') != -1:
-                     epi2()
-              elif func == "3" and file_name.find('epi') != -1:
-                     epi3()
-              elif func == "4" and file_name.find('epi') != -1:
-                     epi4()
-              elif func == "5" and file_name.find('epi') != -1:
-                     epi5()
-              elif func == "6" and file_name.find('epi') != -1:
-                     epi6()
-             
-              
-              plt.show()
-              plt.close()
- 
+def merge_all():
+    merger = PdfFileMerger()
+    filenames = glob2.glob(results_dir + '*.pdf') 
+    for filename in filenames:
+        merger.append(filename)
+        os.remove(filename)
+    with open(results_dir + 'Results_Elections.pdf', "ab") as fout:
+        merger.write(fout)
+    merger.close()
+
+
+# In[25]:
+
+
+path = input("Enter the path of your CSV_files: ").strip()
+main_dirs = os.path.split(os.path.abspath(path))[-1] 
+path = path + '/'
+#print("Testing in progress!")
+for folder_name in sorted(main_dirs):
+       if folder_name.startswith('.') or folder_name == "Results" or folder_name == "Temp":
+              continue
+dirs = os.listdir(path)
+results_dir = os.path.join(path, 'Results/')
+for csv_file in sorted(dirs): #sort number first  
+       csv_file = csv_file
+       if not csv_file.endswith('csv'):
+            continue  # ignore it if not csv files
+       file_name, file_extension = os.path.splitext(csv_file) 
+
+       if file_name.find('CostOf') != -1:
+              cost_2()
+              cost_3()
+       elif file_name.find('president_counties') != -1:
+              county_2()
+              county_3()
+              county_4()
+       elif file_name.find('minority') != -1:
+              minority_2()
+       elif file_name.find('president_dataset') != -1:
+              predict_2()
+       elif file_name.find('senate_dataset') != -1:
+              senate_predict()
+              nn_1layer()
+              nn_2layers()
+       elif file_name.find('independent_expenditures') != -1:
+              expenditures_2()
+              expenditures_3()
+              expenditures_4()
+              expenditures_5()
+              expenditures_6()
+       elif file_name.find('epi') != -1:
+              epi2()
+              epi3()
+              epi4()
+              epi5()
+              epi6()
+merge_all()
+print("Done Merging!")
 
