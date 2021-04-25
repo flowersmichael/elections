@@ -8,7 +8,7 @@
   - Predict the Senate's total votes for each state and predict who will win next election, and finally test the prediction. Refer to [Video](../hiep/Senate_Prediction.m4v) for details.
 - Apply deep-learning neural networks model to analyze from [independent_expenditures.csv](../hiep/Resources/independent_expenditures_2004-2020.csv.zip):
   - Completed data cleaning, decomposed data, then rescale data. Refer to [independent_expenditures.ipynb](../hiep/independent_expenditures.ipynb).
-  - Using neural networks model with 2 hidden layer to train the model. Refer to test result below:
+  - Using neural networks model with 2 hidden layers to train the model. Refer to test result below:
   ![alt text](../hiep/independent_expenditures_2020.png) 
   
   ## Summary
