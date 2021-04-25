@@ -12,4 +12,4 @@
   ![alt text](../hiep/independent_expenditures_2020.png) 
   
   ## Summary
-  - A single python script that runs through all csv files, analyzes all of them, process everything, and finally merge all test results into ONE pdf file for easily review. Everything is just one click. Refer to [Elections Result PDF File](../hiep/Results_Elections.pdf) for your reference.
+  - A single python script that runs through all csv files, analyzes all of them, process everything, and finally merge all test results into ONE pdf file for easily review. Refer to [Elections Result PDF File](../hiep/Results_Elections.pdf) for your reference.
