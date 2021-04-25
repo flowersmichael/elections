@@ -1,6 +1,6 @@
 # elections
 ## Second Segment Project Deliverable
-- Wrote another python script that runs through all csv files, analyzes all of them, process everything, then save the data in pdf file, and finally merge all pdf files into ONE pdf file. Everything is just one click. Refer to [AutoTest.ipynb](../hiep/AutoTest.ipynb), [AutoTest.py](../hiep/AutoTest.py), and [AutoTest Video](../hiep/AutoTest.m4v) for your reference.
+- Wrote another python script that runs through all csv files, analyzes all of them, process everything, then save the data in pdf file, and finally merge all pdf files into ONE pdf file for easily review. Everything is just one click. Refer to [AutoTest.ipynb](../hiep/AutoTest.ipynb), [AutoTest.py](../hiep/AutoTest.py), and [AutoTest Video](../hiep/AutoTest.m4v) for your reference.
 
 ## Challenge
 - Apply machine learning to analyze from [senate_dataset.csv](../hiep/Resources/senate_dataset.csv):
