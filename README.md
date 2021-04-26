@@ -11,7 +11,7 @@
   - Using neural networks model with 2 hidden layers to train the model. Refer to test result below:
   ![alt text](../hiep/independent_expenditures_2020.png)
 - Created a SQL database to store data:
-  - Wrote a script to store data to SQL_database. Refer to [Dataframe_to_sql.ipynb](../hiep/Dataframe_to_sql.ipynb) and [Video](../hiep/SQL_database.m4v) for details..
+  - Wrote a script to store data to SQL_database. Refer to [Dataframe_to_sql.ipynb](../hiep/Dataframe_to_sql.ipynb) and [Video](../hiep/SQL_database.m4v) for details.
   - Also create a ERD with relationships. Refer to [ERD](../hiep/ERD.png) and [Video](../hiep/SQL_ERD.m4v) for details.
  
 ## Summary
