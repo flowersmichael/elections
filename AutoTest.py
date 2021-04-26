@@ -821,7 +821,7 @@ def merge_all():
 path = input("Enter the path of your CSV_files: ").strip()
 main_dirs = os.path.split(os.path.abspath(path))[-1] 
 path = path + '/'
-#print("Testing in progress!")
+print("Testing in progress!")
 for folder_name in sorted(main_dirs):
        if folder_name.startswith('.') or folder_name == "Results" or folder_name == "Temp":
               continue
