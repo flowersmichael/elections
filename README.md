@@ -9,7 +9,10 @@
 - Apply deep-learning neural networks model to analyze from [independent_expenditures.csv](../hiep/Resources/independent_expenditures_2004-2020.csv.zip):
   - Completed data cleaning, decomposed data, then rescale data. Refer to [independent_expenditures.ipynb](../hiep/independent_expenditures.ipynb).
   - Using neural networks model with 2 hidden layers to train the model. Refer to test result below:
-  ![alt text](../hiep/independent_expenditures_2020.png) 
-  
-  ## Summary
-  - A single python script that runs through all csv files, analyzes all of them, process everything, and finally merge all test results into ONE pdf file for easily review. Refer to [Elections Result PDF File](../hiep/Results_Elections.pdf) for your reference.
+  ![alt text](../hiep/independent_expenditures_2020.png)
+- Created a SQL database to store data:
+  - Wrote a script to store data to SQL_database. Refer to [Dataframe_to_sql.ipynb](../hiep/Dataframe_to_sql.ipynb) and [Video](../hiep/SQL_database.m4v) for details..
+  - Also create a ERD with relationships. Refer to [ERD](../hiep/ERD.png) and [Video](../hiep/SQL_ERD.m4v) for details.
+ 
+## Summary
+- A single python script that runs through all csv files, analyzes all of them, process everything, and finally merge all test results into ONE pdf file for easily review. Refer to [Elections Result PDF File](../hiep/Results_Elections.pdf) for your reference.
