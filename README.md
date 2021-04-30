@@ -3,7 +3,7 @@
 - Wrote another python script that runs through all csv files, analyzes all of them, process everything, then save the results in pdf file, and finally merge all pdf files into ONE pdf file for easily review. Everything is just one click. Refer to [AutoTest.ipynb](../hiep/AutoTest.ipynb), [AutoTest.py](../hiep/AutoTest.py), and [AutoTest Video](../hiep/AutoTest.m4v) for your reference.
 
 ## Challenge
-- Build/run Machine Learning models where data stays in the database with SQL
+- Build/run Machine Learning models where data stays in the database with SQL:
   - Apply machine learning to analyze from [senate_dataset.csv](../hiep/Resources/senate_dataset.csv):
     - First Connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
   ![alt text](../hiep/senate_from_SQL.png)
