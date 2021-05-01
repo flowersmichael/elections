@@ -1,0 +1,82 @@
+-- creating tables for election analysis 
+CREATE TABLE Senate_Elections_1976_2020(
+	party_affiliation VARCHAR(3) NOT NULL, 
+	voter_turnout INT NOT NULL, 
+	candidate VARCHAR(3000) NOT NULL, 
+	district INT NOT NULL, 
+	winner VARCHAR(122) NOT NULL, 
+	_year INT NOT NULL, 
+	_state VARCHAR(50) NOT NULL, 
+	PRIMARY KEY (voter_turnout)
+)
+
+drop table Senate_Elections_1976_2020
+
+CREATE TABLE Senate_Elections_1976_2020(
+	_year INT NOT NULL, 
+	_state VARCHAR(50) NOT NULL, 
+	state_po VARCHAR (50) NOT NULL, 
+	state_fips INT NOT NULL, 
+	state_cen INT NOT NULL, 
+	state_ic INT NOT NULL, 
+	office VARCHAR(3) NOT NULL, 
+	district VARCHAR(3) NOT NULL, 
+	stage VARCHAR(3) NOT NULL, 
+	special BOOLEAN NOT NULL, 
+	candidate VARCHAR NOT NULL, 
+	party_detailed VARCHAR(12) NOT NULL, 
+	writein BOOLEAN NOT NULL, 
+	_mode VARCHAR NOT NULL, 
+	candidatevotes INT NOT NULL, 
+	totalvotes INT NOT NULL, 
+	unofficial BOOLEAN NOT NULL, 
+	_version INT NOT NULL, 
+	party_simplified VARCHAR(3) NOT NULL, 
+	PRIMARY KEY(candidatevotes)
+)
+
+
+CREATE TABLE campaign_spending_2020(
+	_state VARCHAR(50) NOT NULL, 
+	candidate VARCHAR(3000) NOT NULL, 
+	amount_spent DECIMAL NOT NULL, 
+	amt_spent_tv_ads DECIMAL NOT NULL, 
+	amt_spent_organizing_staff DECIMAL NOT NULL, 
+	amt_spent_radio DECIMAL NOT NULL, 
+	amt_spent_events DECIMAL NOT NULL, 
+	PRIMARY KEY (amount_spent)
+)
+
+CREATE TABLE voter_turnout(
+	_state VARCHAR(50) NOT NULL, 
+	republican_turnout INT NOT NULL, 
+	dem_turnout INT NOT NULL, 
+	independent_turnout INT NOT NULL, 
+	PRIMARY KEY (dem_turnout)
+)
+
+CREATE TABLE voter_participation(
+	race_type VARCHAR(3) NOT NULL, 
+	district INT NOT NULL, 
+	_state INT NOT NULL, 
+	party_affiliation VARCHAR(10) NOT NULL, 
+	age_of_voter INT NOT NULL, 
+	voter_id INT NOT NULL, 
+	ethnicity VARCHAR(25) NOT NULL, 
+	_year INT NOT NULL, 
+	PRIMARY KEY (voter_id)
+)
+
+
+CREATE TABLE fec-independent-expenditures(
+	committee_id
+	committee_name
+	report_year
+	report_type
+	image_number
+	line_number
+	file_number
+	payee_name
+	payee_first_name
+	payee_middle_name
+)
