@@ -61,7 +61,175 @@ warnings.filterwarnings('ignore', message="^Columns.*")
 warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 
+# In[ ]:
+
+
+def georgia_6():
+    df = pd.read_csv(path + csv_file)
+    columns = ['fact', 'Arizona', 'Georgia', 'South Carolina']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df1[['Arizona', 'Georgia', 'South Carolina']] = df1[['Arizona', 'Georgia', 'South Carolina']].replace('[\%,]','',regex=True).astype(float)
+    df1 = pd.DataFrame({'Georgia': df1['Georgia'].tolist(), 'Arizona': df1['Arizona'].tolist(), 'South Carolina': df1['South Carolina'].tolist()}, index=df1['fact'].tolist())
+    df1.plot.barh()
+    plt.xlabel('Percentage(%)')
+    plt.ylabel('Facts')
+    plt.title('Quick Facts Comparison')
+    plt.savefig(results_dir + file_name + "_6" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 6 is done!")
+
+
+# In[ ]:
+
+
+def georgia_5():
+    df = pd.read_csv(path + csv_file)
+    columns = ['Race', '2016', '2020', '% increase']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df2 = pd.DataFrame({'2020': df1['2020'].tolist(), '2016': df1['2016'].tolist()}, index=df1['Race'].tolist())
+    df2.plot.barh()
+    plt.xlabel('Total Votes (million)')
+    plt.ylabel('Race')
+    plt.title('Georgia Votes By Race')
+    df1 = df1.drop(['2016', '2020'], axis=1)
+    props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+    plt.annotate(f"{df1.to_string(index=False)}", xy=(0.6, 0.2), fontsize=11, xycoords='axes fraction', bbox=props)
+    plt.savefig(results_dir + file_name + "_5" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 5 is done!")
+
+
+# In[ ]:
+
+
+def georgia_4():
+    df = pd.read_csv(path + csv_file)
+    columns = ['year', 'Metro_DEM_Votes', 'Metro_REP_Votes']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df1[['year']] = df1[['year']].fillna(0.0).astype(int)
+    df1 = df1.sort_values('year')
+    df1 = pd.DataFrame({'Metro_DEM_Votes': df1['Metro_DEM_Votes'].tolist(),'Metro_REP_Votes': df1['Metro_REP_Votes'].tolist()}, index=df1['year'].tolist())
+    df1.plot.barh()
+    plt.xlabel('Total Votes (million)')
+    plt.ylabel('Year')
+    plt.title('Atlanta Metro Votes')
+    plt.savefig(results_dir + file_name + "_4" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 4 is done!")
+
+
+# In[ ]:
+
+
+def georgia_3():
+    df = pd.read_csv(path + csv_file)
+    columns = ['year', 'DEM_Rate', 'REP_Rate']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df1[['year']] = df1[['year']].fillna(0.0).astype(int)
+    df1[['DEM_Rate', 'REP_Rate']] = df1[['DEM_Rate', 'REP_Rate']].replace('[\%,]','',regex=True).astype(float)
+    df1 = df1.sort_values('year')
+    df1 = pd.DataFrame({'DEM_Rate': df1['DEM_Rate'].tolist(), 'REP_Rate': df1['REP_Rate'].tolist()}, index=df1['year'].tolist()) 
+    df1.plot.barh()
+    plt.xlabel('Rate(%)')
+    plt.ylabel('Year')
+    plt.title('Democrats vs. Republican Rate in Georgia')
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 3 is done!")
+
+
+# In[ ]:
+
+
+def georgia_2():
+    from urllib.request import urlopen
+    import plotly as py
+    import json
+    import webbrowser
+    df = pd.read_csv(path + csv_file)
+    #df['fips'] = df['fips'].apply(lambda x: '0'+x if len(x) == 4 else x)
+    with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+        counties = json.load(response)
+    #geojson = px.data.election_geojson()
+    #df = counties_fips_color[(counties_fips_color["state_code"] == "GA") | (counties_fips_color["state_code"] == "FL")]
+    states = ['GA', 'SC', 'FL']
+    df = df[df["state_code"].isin(states)]
+    #df = counties_fips_color
+    fig = px.choropleth(df, geojson=counties, locations='fips', color='color',
+                                scope="usa",
+                            
+                            hover_data=["state","county", "candidate", "total_votes"])
+    fig.update_geos(
+                #lonaxis_range=[20, 380],
+                projection_scale=2.7,
+                center=dict(lat=31, lon=-83),
+                visible=True)                      
+    fig.update_layout(title= {"text": "Georgia vs South Carolina & Florida'\n' 2020 swing states total_votes", "xanchor": "center", "x": 0.5, "y": 0.95}, 
+        margin={"r":0,"t":0,"l":0,"b":0}, showlegend=False)
+    fig.write_image(results_dir + file_name + "_2" + ".pdf") #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
+
+
 # In[2]:
+
+
+def swing_state_3():
+    df = pd.read_csv(path + csv_file)
+    states = ["Arizona", "Florida", "Georgia", "Michigan", "Minnesota", "Nevada", "New Hampshire", "North Carolina", "Pennsylvania", "Texas"]
+    df = df.loc[df.state.isin(states)]
+    width = 0.25
+    labels = ['AZ', 'FL', 'GA', 'MI', 'MN', 'NV', 'NH', 'NC', 'PA', 'TX']
+    x = df.state
+    y1 = df['2020']
+    y2 = df['2016']
+    y3 = df['2012']
+    c1 = df['2020_results']
+    c2 = df['2016_results']
+    c3 = df['2012_results']
+    display = [1, 2, 3]
+    plt.bar(np.arange(len(x))- width, y1, color = c1, width=width) 
+    plt.bar(np.arange(len(x)), y2, color = c2, width=width)
+    plt.bar(np.arange(len(x)) + width, y3, color = c3, width=width)
+    plt.ylabel('Margin Rate (%)')
+    plt.xlabel('Swing State')
+    plt.title('Swing States Margin (2020, 2016 & 2012)')
+    plt.xticks(np.arange(len(x)),labels)
+    props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+    plt.annotate("1st Bar: 2020", xy=(0.85, 0.97), fontsize=6, xycoords='axes fraction', bbox=props)
+    plt.annotate("2nd Bar: 2016", xy=(0.85, 0.92), fontsize=6, xycoords='axes fraction', bbox=props)
+    plt.annotate("3rd Bar: 2012", xy=(0.85, 0.87), fontsize=6, xycoords='axes fraction', bbox=props)
+    plt.annotate("2020", xy=(-0.45, 0.45), fontsize=7)
+    plt.annotate("2016", xy=(-0.3, 3.6), fontsize=7)
+    plt.annotate("2012", xy=(0.1, 9.15), fontsize=7)
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 3 is done!")
+
+
+# In[3]:
+
+
+def swing_state_2():
+    df = pd.read_csv(path + csv_file)
+    states = ["Arizona", "Florida", "Georgia", "Michigan", "Minnesota", "Nevada", "New Hampshire", "North Carolina", "Pennsylvania", "Texas"]
+    df = df.loc[df.state.isin(states)]
+    df[['2020_Total_Contributions', '2018_Total_Contributions','2016_Total_Contributions']] = df[['2020_Total_Contributions', '2018_Total_Contributions','2016_Total_Contributions']].replace('[\$,]','',regex=True).astype(float)
+    df1 = pd.DataFrame({'2020': df['2020_Total_Contributions'].tolist(), '2018': df['2018_Total_Contributions'].tolist(), '2016': df['2016_Total_Contributions'].tolist()}, index=df['state'].tolist()) 
+    df1.plot.barh()
+    plt.xlabel('Total Contributions (million)')
+    plt.ylabel('Swing State')
+    plt.title('Swing States Contributions')
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
+
+
+# In[4]:
 
 
 def epi6():
@@ -96,7 +264,7 @@ def epi6():
     print(f"{file_name} 6 is done!")
 
 
-# In[3]:
+# In[5]:
 
 
 def epi5():
@@ -119,7 +287,7 @@ def epi5():
     print(f"{file_name} 5 is done!")
 
 
-# In[4]:
+# In[6]:
 
 
 def epi4():
@@ -142,7 +310,7 @@ def epi4():
     print(f"{file_name} 4 is done!")
 
 
-# In[5]:
+# In[7]:
 
 
 def epi3():
@@ -165,7 +333,7 @@ def epi3():
     print(f"{file_name} 3 is done!")
 
 
-# In[6]:
+# In[8]:
 
 
 def epi2():
@@ -188,7 +356,7 @@ def epi2():
     print(f"{file_name} 2 is done!")
 
 
-# In[7]:
+# In[9]:
 
 
 def nn2_2layers():
@@ -257,7 +425,7 @@ def nn2_2layers():
     nn.save("independent_expenditures.h5")
 
 
-# In[8]:
+# In[10]:
 
 
 def r2_2layers():
@@ -315,7 +483,7 @@ def r2_2layers():
     print(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}")
 
 
-# In[9]:
+# In[11]:
 
 
 def expenditures_6():
@@ -354,7 +522,7 @@ def expenditures_6():
     print(f"{file_name} 6 is done!")
 
 
-# In[10]:
+# In[12]:
 
 
 def expenditures_5():
@@ -384,7 +552,7 @@ def expenditures_5():
     print(f"{file_name} 5 is done!")
 
 
-# In[11]:
+# In[13]:
 
 
 def expenditures_4():
@@ -409,7 +577,7 @@ def expenditures_4():
     print(f"{file_name} 4 is done!")
 
 
-# In[12]:
+# In[14]:
 
 
 def expenditures_3():
@@ -429,7 +597,7 @@ def expenditures_3():
     print(f"{file_name} 3 is done!")
 
 
-# In[13]:
+# In[15]:
 
 
 def expenditures_2():
@@ -448,7 +616,7 @@ def expenditures_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[14]:
+# In[16]:
 
 
 def senate_predict():  
@@ -507,7 +675,7 @@ def senate_predict():
     print(f"{file_name} is done!")
 
 
-# In[15]:
+# In[17]:
 
 
 def nn_2layers():
@@ -562,7 +730,7 @@ def nn_2layers():
     print("neural network model with 2 hidden layers is done!")
 
 
-# In[26]:
+# In[18]:
 
 
 def nn_1layer():
@@ -616,7 +784,7 @@ def nn_1layer():
     print("neural network model with 1 hidden layer is done!")
 
 
-# In[17]:
+# In[19]:
 
 
 def predict_2():
@@ -646,7 +814,7 @@ def predict_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[18]:
+# In[20]:
 
 
 def minority_2(): 
@@ -692,7 +860,7 @@ def minority_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[19]:
+# In[21]:
 
 
 def county_4():
@@ -725,7 +893,7 @@ def county_4():
     print(f"{file_name} 4 is done!")
 
 
-# In[20]:
+# In[22]:
 
 
 def county_3():
@@ -738,7 +906,7 @@ def county_3():
     plt.close()
 
 
-# In[21]:
+# In[23]:
 
 
 def county_2():
@@ -757,7 +925,7 @@ def county_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[22]:
+# In[24]:
 
 
 def cost_3():
@@ -775,7 +943,7 @@ def cost_3():
     print(f"{file_name} 3 is done!")
 
 
-# In[23]:
+# In[25]:
 
 
 def cost_2():
@@ -793,7 +961,7 @@ def cost_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[24]:
+# In[26]:
 
 
 def df():
@@ -801,7 +969,7 @@ def df():
     print(df)
 
 
-# In[ ]:
+# In[27]:
 
 
 def merge_all():
@@ -815,7 +983,7 @@ def merge_all():
     merger.close()
 
 
-# In[25]:
+# In[28]:
 
 
 path = input("Enter the path of your CSV_files: ").strip()
@@ -860,6 +1028,15 @@ for csv_file in sorted(dirs): #sort number first
               epi4()
               epi5()
               epi6()
+       elif file_name.find('swing_state') != -1: 
+              swing_state_2()
+              swing_state_3()   
+       elif file_name.find('Georgia') != -1:
+              georgia_2()
+              georgia_3()
+              georgia_4()
+              georgia_5()
+              georgia_6()
 merge_all()
 print("Done Merging!")
 
