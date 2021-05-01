@@ -5,12 +5,12 @@
 ## Challenge
 - Build/run Machine Learning models where data stays in the database with SQL:
   - Apply machine learning to analyze from [senate_dataset.csv](../hiep/Resources/senate_dataset.csv):
-    - First Connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
+    - First connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
   ![alt text](../hiep/senate_from_SQL.png)
     - Completed data cleaning, rescale data, then apply neural networks model to train model. Refer to [senate_model.ipynb](../hiep/senate_model.ipynb).
     - Also predict the Senate's total votes for each state and predict who will win next election, and finally test the prediction. Refer to [senate_prediction.ipynb](../hiep/Senate_prediction.ipynb) and [Video](../hiep/Senate_Prediction.m4v) for details.
   - Apply deep-learning neural networks model to analyze from [independent_expenditures.csv](../hiep/Resources/independent_expenditures_2004-2020.csv.zip):
-    - First Connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
+    - First connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
   ![alt text](../hiep/fec_independent_expenditures_from_SQL.png)
     - Completed data cleaning, decomposed data, then rescale data. Refer to [fec_independent_expenditures.ipynb](../hiep/fec_independent_expenditures_model.ipynb).
     - Using neural networks model with 2 hidden layers to train the model. Refer to test result below:
