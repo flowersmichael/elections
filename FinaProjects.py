@@ -55,6 +55,163 @@ from matplotlib import ticker
 # In[ ]:
 
 
+def georgia_6():
+    df = pd.read_csv(csv_file)
+    columns = ['fact', 'Arizona', 'Georgia', 'South Carolina']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df1[['Arizona', 'Georgia', 'South Carolina']] = df1[['Arizona', 'Georgia', 'South Carolina']].replace('[\%,]','',regex=True).astype(float)
+    df1 = pd.DataFrame({'Georgia': df1['Georgia'].tolist(), 'Arizona': df1['Arizona'].tolist(), 'South Carolina': df1['South Carolina'].tolist()}, index=df1['fact'].tolist())
+    df1.plot.barh()
+    plt.xlabel('Percentage(%)')
+    plt.ylabel('Facts')
+    plt.title('Quick Facts Comparison')
+    plt.show()
+
+
+# In[ ]:
+
+
+def georgia_5():
+    df = pd.read_csv(csv_file)
+    columns = ['Race', '2016', '2020', '% increase']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df2 = pd.DataFrame({'2020': df1['2020'].tolist(), '2016': df1['2016'].tolist()}, index=df1['Race'].tolist())
+    df2.plot.barh()
+    plt.xlabel('Total Votes (million)')
+    plt.ylabel('Race')
+    plt.title('Georgia Votes By Race')
+    df1 = df1.drop(['2016', '2020'], axis=1)
+    props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+    plt.annotate(f"{df1.to_string(index=False)}", xy=(0.6, 0.2), fontsize=11, xycoords='axes fraction', bbox=props)
+    plt.show()
+
+
+# In[ ]:
+
+
+def georgia_4():
+    df = pd.read_csv(csv_file)
+    columns = ['year', 'Metro_DEM_Votes', 'Metro_REP_Votes']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df1[['year']] = df1[['year']].fillna(0.0).astype(int)
+    df1 = df1.sort_values('year')
+    df1 = pd.DataFrame({'Metro_DEM_Votes': df1['Metro_DEM_Votes'].tolist(),'Metro_REP_Votes': df1['Metro_REP_Votes'].tolist()}, index=df1['year'].tolist())
+    df1.plot.barh()
+    plt.xlabel('Total Votes (million)')
+    plt.ylabel('Year')
+    plt.title('Atlanta Metro Votes')
+    plt.show()
+
+
+# In[ ]:
+
+
+def georgia_3():
+    df = pd.read_csv(csv_file)
+    columns = ['year', 'DEM_Rate', 'REP_Rate']
+    df1 = df[columns]
+    df1 = df1.dropna()
+    df1[['year']] = df1[['year']].fillna(0.0).astype(int)
+    df1[['DEM_Rate', 'REP_Rate']] = df1[['DEM_Rate', 'REP_Rate']].replace('[\%,]','',regex=True).astype(float)
+    df1 = df1.sort_values('year')
+    df1 = pd.DataFrame({'DEM_Rate': df1['DEM_Rate'].tolist(), 'REP_Rate': df1['REP_Rate'].tolist()}, index=df1['year'].tolist()) 
+    df1.plot.barh()
+    plt.xlabel('Rate(%)')
+    plt.ylabel('Year')
+    plt.title('Democrats vs. Republican Rate in Georgia')
+    plt.show()
+
+
+# In[ ]:
+
+
+def georgia_2():
+    from urllib.request import urlopen
+    import plotly as py
+    import json
+    import webbrowser
+    df = pd.read_csv(csv_file)
+    #df['fips'] = df['fips'].apply(lambda x: '0'+x if len(x) == 4 else x)
+    with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+        counties = json.load(response)
+    #geojson = px.data.election_geojson()
+    #df = counties_fips_color[(counties_fips_color["state_code"] == "GA") | (counties_fips_color["state_code"] == "FL")]
+    states = ['GA', 'SC', 'FL']
+    df = df[df["state_code"].isin(states)]
+    #df = counties_fips_color
+    fig = px.choropleth(df, geojson=counties, locations='fips', color='color',
+                                scope="usa",
+                            
+                            hover_data=["state","county", "candidate", "total_votes"])
+    fig.update_geos(
+                #lonaxis_range=[20, 380],
+                projection_scale=2.7,
+                center=dict(lat=31, lon=-83),
+                visible=True)                      
+    fig.update_layout(title= {"text": "Georgia vs South Carolina & Florida'\n' 2020 swing states total_votes", "xanchor": "center", "x": 0.5, "y": 0.95}, 
+        margin={"r":0,"t":0,"l":0,"b":0}, showlegend=False)
+    fig.show()
+    fig.write_html("myplot.html")
+    url = 'file://file:///Users/hiep_pham/Desktop/Analysis_Projects/Final_Project/myplot.html'
+    webbrowser.open(url, new=2)  # open in new tab
+
+
+# In[ ]:
+
+
+def swing_state_3():
+    df = pd.read_csv(csv_file)
+    states = ["Arizona", "Florida", "Georgia", "Michigan", "Minnesota", "Nevada", "New Hampshire", "North Carolina", "Pennsylvania", "Texas"]
+    df = df.loc[df.state.isin(states)]
+    width = 0.25
+    labels = ['AZ', 'FL', 'GA', 'MI', 'MN', 'NV', 'NH', 'NC', 'PA', 'TX']
+    x = df.state
+    y1 = df['2020']
+    y2 = df['2016']
+    y3 = df['2012']
+    c1 = df['2020_results']
+    c2 = df['2016_results']
+    c3 = df['2012_results']
+    display = [1, 2, 3]
+    plt.bar(np.arange(len(x))- width, y1, color = c1, width=width) 
+    plt.bar(np.arange(len(x)), y2, color = c2, width=width)
+    plt.bar(np.arange(len(x)) + width, y3, color = c3, width=width)
+    plt.ylabel('Margin Rate (%)')
+    plt.xlabel('Swing State')
+    plt.title('Swing States Margin (2020, 2016 & 2012)')
+    plt.xticks(np.arange(len(x)),labels)
+    props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+    plt.annotate("1st Bar: 2020", xy=(0.85, 0.97), fontsize=6, xycoords='axes fraction', bbox=props)
+    plt.annotate("2nd Bar: 2016", xy=(0.85, 0.92), fontsize=6, xycoords='axes fraction', bbox=props)
+    plt.annotate("3rd Bar: 2012", xy=(0.85, 0.87), fontsize=6, xycoords='axes fraction', bbox=props)
+    plt.annotate("2020", xy=(-0.45, 0.45), fontsize=7)
+    plt.annotate("2016", xy=(-0.3, 3.6), fontsize=7)
+    plt.annotate("2012", xy=(0.1, 9.15), fontsize=7)
+    plt.show()
+
+
+# In[ ]:
+
+
+def swing_state_2():
+    df = pd.read_csv(csv_file)
+    states = ["Arizona", "Florida", "Georgia", "Michigan", "Minnesota", "Nevada", "New Hampshire", "North Carolina", "Pennsylvania", "Texas"]
+    df = df.loc[df.state.isin(states)]
+    df[['2020_Total_Contributions', '2018_Total_Contributions','2016_Total_Contributions']] = df[['2020_Total_Contributions', '2018_Total_Contributions','2016_Total_Contributions']].replace('[\$,]','',regex=True).astype(float)
+    df1 = pd.DataFrame({'2020': df['2020_Total_Contributions'].tolist(), '2018': df['2018_Total_Contributions'].tolist(), '2016': df['2016_Total_Contributions'].tolist()}, index=df['state'].tolist()) 
+    df1.plot.barh()
+    plt.xlabel('Total Contributions (million)')
+    plt.ylabel('Swing State')
+    plt.title('Swing States Contributions')
+    plt.show()
+
+
+# In[ ]:
+
+
 def epi6():
     df = pd.read_csv(csv_file)
     df1 = df.drop(['state_abbv', 'state_fips', 'website_reg_status', 'website_provisional_status', 'online_reg'],axis=1)
@@ -451,6 +608,7 @@ def senate_predict():
             prediction = pd.DataFrame({'State':df.state_po,'Last_Election':df.totalvotes, 'Next_Election_Pred': y_pred.astype(int)}, index=None)
             prediction = prediction.iloc[[-1]]
             print (prediction.to_string(index=False))
+
             y = df.totalvotes.values
             #drop last column of data
             X = df.drop(['winning_party', 'state_po'], axis=1)
@@ -835,6 +993,7 @@ while True:
        elif not file_name1.endswith('csv'):
               continue  # ignore it if not csv files
        file_name, file_extension = os.path.splitext(file_name1)   
+
        list1 = ["Option 1: Print Data Frame",
               "Option 2: Democrats vs. Republican Spending",
               "Option 3: House winner vs. Senate winner Spending"
@@ -869,6 +1028,17 @@ while True:
               "Option 4: Top Ten UOCAVA Ballot Rejection by State",
               "Option 5: Top Ten VEP Turnout By State ",
               "Option 6: Predict Top Ten VEP Turnout By State",
+              ]
+       list8 = ["Option 1: Print Data Frame",
+              "Option 2: Swing States Contributions",
+              "Option 3: Swing States Margin",      
+              ]
+       list9 = ["Option 1: Print Data Frame",
+              "Option 2: Georgia Votes By County",
+              "Option 3: Democrats vs. Republican Rate in Georgia",
+              "Option 4: Atlanta Metro Votese",
+              "Option 5: Georgia Votes By Race",
+              "Option 6: Quick Facts Comparison",
               ]
        while True and len(file_name) > 2:
               if file_name.find('CostOf') != -1:
@@ -906,8 +1076,18 @@ while True:
                      print(*list7,sep='\n')
                      func = input("Please input the option #: ")
                      print("")
+              elif file_name.find('swing_state') != -1:
+                     print(blue(f"The following options are available for {file_name1}:"))
+                     print(*list8,sep='\n')
+                     func = input("Please input the option #: ")
+                     print("")
+              elif file_name.find('Georgia') != -1:
+                     print(blue(f"The following options are available for {file_name1}:"))
+                     print(*list9,sep='\n')
+                     func = input("Please input the option #: ")
+                     print("")
               
-              if func == "": #hit enter to quit function while loop(enter is len = 1) 
+              if func == "": #hit enter to quit function while loop
                      break
               elif func not in ("1", "2", "3", "4", "5", '6','7'):
                      print(red("Typo! Please try again."))
@@ -967,6 +1147,24 @@ while True:
                      epi5()
               elif func == "6" and file_name.find('epi') != -1:
                      epi6()
+              if func == "1" and file_name.find('swing_state') != -1:
+                     df()
+              elif func == "2" and file_name.find('swing_state') != -1:
+                     swing_state_2()
+              elif func == "3" and file_name.find('swing_state') != -1:
+                     swing_state_3()
+              elif func == "1" and file_name.find('Georgia') != -1:
+                     df()
+              elif func == "2" and file_name.find('Georgia') != -1:
+                     georgia_2()
+              elif func == "3" and file_name.find('Georgia') != -1:
+                     georgia_3()
+              elif func == "4" and file_name.find('Georgia') != -1:
+                     georgia_4()
+              elif func == "5" and file_name.find('Georgia') != -1:
+                     georgia_5()
+              elif func == "6" and file_name.find('Georgia') != -1:
+                     georgia_6()
              
               
               plt.show()
