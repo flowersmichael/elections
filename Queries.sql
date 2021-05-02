@@ -17,22 +17,25 @@ ON LOWER(e.state_fips) = LOWER(s.state)
 WITH senate_agg AS (
 SELECT year,
 	   state,
-	   district,
-	   candidate,
-	   candidatevotes,
-	   totalvotes
+	   party_simplified,
+	   COUNT(candidate) AS candidates,
+	   SUM(candidatevotes) AS candidatevotes,
+	   MAX(totalvotes) AS totalvotes
 FROM senate_data
-	   )
+GROUP BY year,
+	     state,
+	     party_simplified
+ORDER BY year, state)
 
 SELECT s.year, 
 	   state,  
-	   district, 
-	   candidate, 
+	   party_simplified, 
+	   candidates, 
 	   candidatevotes, 
 	   totalvotes,
 	   pct_reg_of_vep_vrs,
 	   vep_turnout
-FROM senate_data AS s
+FROM senate_agg AS s
 LEFT JOIN election_performace_indicators AS e 
 ON LOWER(e.state_fips) = LOWER(s.state)
-GROUP BY s.year, state, district, candidate
+ORDER BY year, state
