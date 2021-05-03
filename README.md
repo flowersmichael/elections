@@ -20,7 +20,7 @@ In recent years, U.S. federal election campaign spending has exploded. In 2020, 
 
 While this influx of cash gives campaigns the flexibility to spend in ways and amounts previously unavailable, it's also resulted in a campaign finance "arms race" where the opposing candidates often have the same flexibility. It remains critical for campaigns to allocate resources wisely.
 
-So, we want to examine not only to what degree campaign spending influences election outcomes, but also what types of spending are most effective.
+So, we want to examine not only to what degree campaign spending influences election outcomes, but also what types of spending are most effective. In particular we are looking closely at support ads versus opposition ads.
 
 
 ## Data Sources
@@ -54,3 +54,35 @@ Given a baseline expectation of candidate performance, how well can we predict c
 Outside of the Tuesday and Thursday night classes, we will meet over video conference at least once per week to coordinate and plan.
 
 Additionally, we will be communicating regularly via our group Slack channel, and group text as well.
+
+## Outline
+
+▾ □ Elections Analysis
+    ▾ □ Questions to Answer
+        ▾ □ How much does a vote "cost”?
+            ▾ □ Build a curve?
+                - □ Dollars spent (x-axis) vs win probability (y-axis)
+                - □ “That matches up with other research suggesting that advertising can have a serious effect on how people vote if the candidate buying the ads is not already well-known and if the election at hand is less predetermined along partisan lines.
+Basically, said Darrell West, vice president and director of governance studies at the Brookings Institution, advertising is useful for making voters aware that a candidate or an issue exists at all. Once you’ve established that you’re real and that enough people are paying attention to you to give you a decent chunk of money, you reach a point of diminishing returns”
+            - □ Only look at competitive states
+            - □ Varies depending on incumbency
+            - □ 
+        ▾ □ Support or opposition ads?
+            - □ Top-line ratio of all campaigns (60/40? 80/20? etc), maybe subgroup ratios too
+            - □ Support ads = more turnout? Maybe limit to that?
+            - □ When are opposition ads most effective?
+        ▾ □ How do we integrate demographics?
+            - □ Possible hypothesis: younger and more demographically diverse states have lower turnout and are ripe for increased turnout
+            - □ 
+    ▾ □ Datasets
+        - □ Senate race results 1976-2020
+        - □ State-level demographics
+        - □ County-level demographics (maybe for one or a few states?)
+        ▾ □ Elections Performance Index
+            ▾ □ Can use for turnout data at least (2008-2018)
+                - □ Three presidential elections (08, 12, 16) and three midterms (10, 14, 18)
+    ▾ □ Predict winners based on ad money spent
+        - □ Machine-learning model
+    ▾ □ Dashboard
+        - □ Maybe input spending and predict turnout and results
+
