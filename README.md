@@ -53,32 +53,4 @@ Additionally, we will be communicating regularly via our group Slack channel, an
 
 ## Outline
 
-▾ □ Elections Analysis
-    ▾ □ Questions to Answer
-        ▾ □ How much does a vote "cost”?
-            ▾ □ Build a curve?
-                - □ Dollars spent (x-axis) vs win probability (y-axis)
-                - □ “That matches up with other research suggesting that advertising can have a serious effect on how people vote if the candidate buying the ads is not already well-known and if the election at hand is less predetermined along partisan lines.
-Basically, said Darrell West, vice president and director of governance studies at the Brookings Institution, advertising is useful for making voters aware that a candidate or an issue exists at all. Once you’ve established that you’re real and that enough people are paying attention to you to give you a decent chunk of money, you reach a point of diminishing returns”
-            - □ Only look at competitive states
-            - □ Varies depending on incumbency
-            - □ 
-        ▾ □ Support or opposition ads?
-            - □ Top-line ratio of all campaigns (60/40? 80/20? etc), maybe subgroup ratios too
-            - □ Support ads = more turnout? Maybe limit to that?
-            - □ When are opposition ads most effective?
-        ▾ □ How do we integrate demographics?
-            - □ Possible hypothesis: younger and more demographically diverse states have lower turnout and are ripe for increased turnout
-            - □ 
-    ▾ □ Datasets
-        - □ Senate race results 1976-2020
-        - □ State-level demographics
-        - □ County-level demographics (maybe for one or a few states?)
-        ▾ □ Elections Performance Index
-            ▾ □ Can use for turnout data at least (2008-2018)
-                - □ Three presidential elections (08, 12, 16) and three midterms (10, 14, 18)
-    ▾ □ Predict winners based on ad money spent
-        - □ Machine-learning model
-    ▾ □ Dashboard
-        - □ Maybe input spending and predict turnout and results
-
+[Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
