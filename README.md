@@ -40,13 +40,9 @@ We hypothesize that focused campaign spending on competitive races in states wit
 
 ## Questions to Answer
 
-How much does each additional dollar spent by campaigns relative to other campaigns impact the candidate's win probability?
-
-What is the optimal asset allocation of campaign dollars in terms of spending categories?
+For competitive campaigns, how much does each additional dollar spent by campaigns relative to other campaigns impact the candidate's win probability?
 
 Does this asset allocation prescription vary by subgroups of U.S. states with similar demographic profiles?
-
-Given a baseline expectation of candidate performance, how well can we predict candidate performance using our independent variables?
 
 
 ## Team Communication
