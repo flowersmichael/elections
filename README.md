@@ -1,4 +1,4 @@
-# U.S. Senate Cammpaign Spending Analysis
+# U.S. Senate Campaign Spending Analysis
 
 ## Topic
 
@@ -53,4 +53,4 @@ Additionally, we will be communicating regularly via our group Slack channel, an
 
 ## Outline
 
-[Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
+![Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
