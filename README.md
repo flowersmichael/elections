@@ -8,10 +8,11 @@ Advertising is the major expense of political campaigns, with recent U.S. Senate
 
 Hard money comes from political donations that are regulated by law by the Federal Election Commission, versus "soft money" that is donated in such a way that leaves the contribution unregulated. Soft money donations can be used for "party building" activities, but these funds cannot be used to tell voters which candidates to vote for. Hard money contributions, on the other hand, are spent on ads that either directly support or oppose a specific candidate.
 
-For the purposes of this project, we are strictly concerned with "hard money" political donations. 
+For the purposes of this project, we are strictly concerned with "hard money" political donations.
 
-We will measure success in multiple ways including whether or not the Senate candidates win their campaigns, but also how well they do relative to expectations.
+When evaluating the success of a Senate campaign, we are primarily concerned with whether or not the Senate candidates win their campaigns, but also interested in how well the candidates do relative to expectations.
 
+We also will look at the upcoming Senate elections in 2022, specifically the subset of elections that are expected to be competitive, and using our machine-learning model we will predict winners based on how much *and how* money is spent.
 
 ## Reason for Interest
 
@@ -24,11 +25,17 @@ So, we want to examine not only to what degree campaign spending influences elec
 
 ## Data Sources
 
-We rely primarily on two data sources for the project.
+We rely primarily on four general data sources for the project.
 
 The first source is titled [U.S. Senate 1976-2020](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/PEJ5QU), from MIT Election Data and Science Lab. This dataset shows state-level returns for U.S. Senate elections from 1976-2020.
 
 Our second dataset is Federal Election Commission (FEC) data via [Kaggle](https://www.kaggle.com/fec/independent-political-ad-spending). This dataset shows campaign spending for U.S. Senate, House of Representatives, and Presidential elections between 2002-2016.
+
+Our third dataset is state-level demographic data. We use this information to identify and compare states with similar electorate profiles.
+
+Our final dataset is from the Elections Performance Index. The Elections Performance Index provides a "non-partisan, objective measure of how well each state is faring in managing national elections." The EPI uses seventeen indicators to evaluate election administration at the state level. While every indicator sheds light on a different aspect of each state's unique profile, voter turnout is a measure of "civic participation that many people believe best gauges the health of the electoral process."
+
+We hypothesize that focused campaign spending on competitive races in states with turnout levels that, relative to other states, show room for significant improvement, is money well spent.
 
 
 ## Questions to Answer
