@@ -2,9 +2,13 @@
 
 ## Topic
 
-For our final group project, we are examining the relationship between how much money is spent by United States Senate campaigns, how the campaigns spend their money, and the success of these campaigns.
+For our final group project, we are examining the relationship between how much money is spent by United States Senate campaigns, how the campaigns spend their money, and the success of these campaigns. How and to what extent does money affect elections?
 
-We are interested in how often the Senate candidate that spends the most wins the election, but also *how* the campaigns spend their funds. Some examples of how campaigns spend their money include staff salaries, advertising expenses, travel expenses, and campaign materials.
+Advertising is the major expense of political campaigns, with recent U.S. Senate campaigns spending roughly 40% of funds on ads. Within this realm of political advertising, political donations can be classified as either "hard money" or "soft money" contributions.
+
+Hard money comes from political donations that are regulated by law by the Federal Election Commission, versus "soft money" that is donated in such a way that leaves the contribution unregulated. Soft money donations can be used for "party building" activities, but these funds cannot be used to tell voters which candidates to vote for. Hard money contributions, on the other hand, are spent on ads that either directly support or oppose a specific candidate.
+
+For the purposes of this project, we are strictly concerned with "hard money" political donations. 
 
 We will measure success in multiple ways including whether or not the Senate candidates win their campaigns, but also how well they do relative to expectations.
 
