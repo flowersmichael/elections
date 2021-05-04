@@ -64,6 +64,141 @@ warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 # In[ ]:
 
 
+def race_5():
+    df = pd.read_csv(path + csv_file)
+    df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+    years = [2019]
+    df = df.loc[df.Year.isin(years)]
+    table_count = df.groupby(df['State'])['Population'].sum()
+    table_count = table_count.sort_values(ascending=False)
+    y = table_count.index
+    x = table_count.values
+    ax = sns.barplot(x = x,y=y,orient='h')
+    #props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+    #plt.annotate("EPI", xy=(0.5, 0.5), fontsize=15, xycoords='axes fraction', bbox=props)
+    plt.ylabel('State')
+    plt.xlabel('Population (million)')
+    ax.set_title("2019 Swing States Population")
+    plt.savefig(results_dir + file_name + "_5" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 5 is done!")
+
+
+# In[ ]:
+
+
+def race_4():
+    df = pd.read_csv(path + csv_file)
+    df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+    years = [2017, 2018, 2019]
+    df1 = df.loc[df.Year.isin([years[0]])]
+    table_0 = df1.groupby(df['Gender'])['Population'].sum()
+    table_0 = table_0.sort_values(ascending=True)
+    try:
+        df2 = df.loc[df.Year.isin([years[1]])]
+        table_1 = df2.groupby(df['Gender'])['Population'].sum()
+        table_1 = table_1.sort_values(ascending=True)
+    except:
+        pass
+    try:
+        df3 = df.loc[df.Year.isin([years[2]])]
+        table_2 = df3.groupby(df['Gender'])['Population'].sum()
+        table_2 = table_2.sort_values(ascending=True)
+    except:
+        pass
+    if len(years) == 1:
+        df4 = pd.DataFrame({years[0]: table_0.values.tolist()}, index=table_0.index.tolist())
+    elif len(years) == 2:  
+        df4 = pd.DataFrame({years[1]: table_1.values.tolist(), years[0]: table_0.values.tolist()}, index=table_1.index.tolist()) 
+    elif len(years) == 3:
+        df4 = pd.DataFrame({years[2]: table_2.values.tolist(), years[1]: table_1.values.tolist(), years[0]: table_2.values.tolist()}, index=table_2.index.tolist()) 
+    df4.plot.barh()
+    plt.xlabel('Population (million)')
+    plt.ylabel('Race')
+    plt.title('Gender By Population')
+    plt.savefig(results_dir + file_name + "_4" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 4 is done!")
+
+
+# In[ ]:
+
+
+def race_3():
+    df = pd.read_csv(path + csv_file)
+    df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+    years = [2017, 2018, 2019]
+    df1 = df.loc[df.Year.isin([years[0]])]
+    table_0 = df1.groupby(df['Race'])['Population'].sum()
+    table_0 = table_0.sort_values(ascending=True)
+    try:
+        df2 = df.loc[df.Year.isin([years[1]])]
+        table_1 = df2.groupby(df['Race'])['Population'].sum()
+        table_1 = table_1.sort_values(ascending=True)
+    except:
+        pass
+    try:
+        df3 = df.loc[df.Year.isin([years[2]])]
+        table_2 = df3.groupby(df['Race'])['Population'].sum()
+        table_2 = table_2.sort_values(ascending=True)
+    except:
+        pass
+    if len(years) == 1:
+        df4 = pd.DataFrame({years[0]: table_0.values.tolist()}, index=table_0.index.tolist())
+    elif len(years) == 2:  
+        df4 = pd.DataFrame({years[1]: table_1.values.tolist(), years[0]: table_0.values.tolist()}, index=table_1.index.tolist()) 
+    elif len(years) == 3:
+        df4 = pd.DataFrame({years[2]: table_2.values.tolist(), years[1]: table_1.values.tolist(), years[0]: table_2.values.tolist()}, index=table_2.index.tolist()) 
+    df4.plot.barh()
+    plt.xlabel('Population (million)')
+    plt.ylabel('Race')
+    plt.title('Race By Population')
+    plt.savefig(results_dir + file_name + "_3" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 3 is done!")
+
+
+# In[ ]:
+
+
+def race_2():
+    df = pd.read_csv(path + csv_file)
+    df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+    years = [2017, 2018, 2019]
+    df1 = df.loc[df.Year.isin([years[0]])]
+    table_0 = df1.groupby(df['State'])['Population'].sum()
+    table_0 = table_0.sort_values(ascending=True)
+    try:
+        df2 = df.loc[df.Year.isin([years[1]])]
+        table_1 = df2.groupby(df['State'])['Population'].sum()
+        table_1 = table_1.sort_values(ascending=True)
+    except:
+        pass
+    try:
+        df3 = df.loc[df.Year.isin([years[2]])]
+        table_2 = df3.groupby(df['State'])['Population'].sum()
+        table_2 = table_2.sort_values(ascending=True)
+    except:
+        pass
+    if len(years) == 1:
+        df4 = pd.DataFrame({years[0]: table_0.values.tolist()}, index=table_0.index.tolist())
+    elif len(years) == 2:  
+        df4 = pd.DataFrame({years[1]: table_1.values.tolist(), years[0]: table_0.values.tolist()}, index=table_1.index.tolist()) 
+    elif len(years) == 3:
+        df4 = pd.DataFrame({years[2]: table_2.values.tolist(), years[1]: table_1.values.tolist(), years[0]: table_2.values.tolist()}, index=table_2.index.tolist()) 
+    df4.plot.barh()
+    plt.xlabel('Population (million)')
+    plt.ylabel('Swing State')
+    plt.title('Swing States By Population')
+    plt.savefig(results_dir + file_name + "_2" + ".pdf", dpi=200, bbox_inches='tight') #single figure(3) 
+    plt.close()
+    print(f"{file_name} 2 is done!")
+    
+
+
+# In[2]:
+
+
 def georgia_6():
     df = pd.read_csv(path + csv_file)
     columns = ['fact', 'Arizona', 'Georgia', 'South Carolina']
@@ -80,7 +215,7 @@ def georgia_6():
     print(f"{file_name} 6 is done!")
 
 
-# In[ ]:
+# In[3]:
 
 
 def georgia_5():
@@ -101,7 +236,7 @@ def georgia_5():
     print(f"{file_name} 5 is done!")
 
 
-# In[ ]:
+# In[4]:
 
 
 def georgia_4():
@@ -121,7 +256,7 @@ def georgia_4():
     print(f"{file_name} 4 is done!")
 
 
-# In[ ]:
+# In[5]:
 
 
 def georgia_3():
@@ -142,7 +277,7 @@ def georgia_3():
     print(f"{file_name} 3 is done!")
 
 
-# In[ ]:
+# In[6]:
 
 
 def georgia_2():
@@ -175,7 +310,7 @@ def georgia_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[2]:
+# In[7]:
 
 
 def swing_state_3():
@@ -211,7 +346,7 @@ def swing_state_3():
     print(f"{file_name} 3 is done!")
 
 
-# In[3]:
+# In[8]:
 
 
 def swing_state_2():
@@ -229,7 +364,7 @@ def swing_state_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[4]:
+# In[9]:
 
 
 def epi6():
@@ -264,7 +399,7 @@ def epi6():
     print(f"{file_name} 6 is done!")
 
 
-# In[5]:
+# In[10]:
 
 
 def epi5():
@@ -287,7 +422,7 @@ def epi5():
     print(f"{file_name} 5 is done!")
 
 
-# In[6]:
+# In[11]:
 
 
 def epi4():
@@ -310,7 +445,7 @@ def epi4():
     print(f"{file_name} 4 is done!")
 
 
-# In[7]:
+# In[12]:
 
 
 def epi3():
@@ -333,7 +468,7 @@ def epi3():
     print(f"{file_name} 3 is done!")
 
 
-# In[8]:
+# In[13]:
 
 
 def epi2():
@@ -356,7 +491,7 @@ def epi2():
     print(f"{file_name} 2 is done!")
 
 
-# In[9]:
+# In[14]:
 
 
 def nn2_2layers():
@@ -425,7 +560,7 @@ def nn2_2layers():
     nn.save("independent_expenditures.h5")
 
 
-# In[10]:
+# In[15]:
 
 
 def r2_2layers():
@@ -483,7 +618,7 @@ def r2_2layers():
     print(f"r2_score of y_test: {r2_score(y_test, y_test_pred)}")
 
 
-# In[11]:
+# In[16]:
 
 
 def expenditures_6():
@@ -522,7 +657,7 @@ def expenditures_6():
     print(f"{file_name} 6 is done!")
 
 
-# In[12]:
+# In[17]:
 
 
 def expenditures_5():
@@ -552,7 +687,7 @@ def expenditures_5():
     print(f"{file_name} 5 is done!")
 
 
-# In[13]:
+# In[18]:
 
 
 def expenditures_4():
@@ -577,7 +712,7 @@ def expenditures_4():
     print(f"{file_name} 4 is done!")
 
 
-# In[14]:
+# In[19]:
 
 
 def expenditures_3():
@@ -597,7 +732,7 @@ def expenditures_3():
     print(f"{file_name} 3 is done!")
 
 
-# In[15]:
+# In[20]:
 
 
 def expenditures_2():
@@ -616,7 +751,7 @@ def expenditures_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[16]:
+# In[21]:
 
 
 def senate_predict():  
@@ -675,7 +810,7 @@ def senate_predict():
     print(f"{file_name} is done!")
 
 
-# In[17]:
+# In[22]:
 
 
 def nn_2layers():
@@ -730,7 +865,7 @@ def nn_2layers():
     print("neural network model with 2 hidden layers is done!")
 
 
-# In[18]:
+# In[23]:
 
 
 def nn_1layer():
@@ -784,7 +919,7 @@ def nn_1layer():
     print("neural network model with 1 hidden layer is done!")
 
 
-# In[19]:
+# In[24]:
 
 
 def predict_2():
@@ -814,7 +949,7 @@ def predict_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[20]:
+# In[25]:
 
 
 def minority_2(): 
@@ -860,7 +995,7 @@ def minority_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[21]:
+# In[26]:
 
 
 def county_4():
@@ -893,7 +1028,7 @@ def county_4():
     print(f"{file_name} 4 is done!")
 
 
-# In[22]:
+# In[27]:
 
 
 def county_3():
@@ -906,7 +1041,7 @@ def county_3():
     plt.close()
 
 
-# In[23]:
+# In[28]:
 
 
 def county_2():
@@ -925,7 +1060,7 @@ def county_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[24]:
+# In[29]:
 
 
 def cost_3():
@@ -943,7 +1078,7 @@ def cost_3():
     print(f"{file_name} 3 is done!")
 
 
-# In[25]:
+# In[30]:
 
 
 def cost_2():
@@ -961,7 +1096,7 @@ def cost_2():
     print(f"{file_name} 2 is done!")
 
 
-# In[26]:
+# In[31]:
 
 
 def df():
@@ -969,7 +1104,7 @@ def df():
     print(df)
 
 
-# In[27]:
+# In[32]:
 
 
 def merge_all():
@@ -983,7 +1118,7 @@ def merge_all():
     merger.close()
 
 
-# In[28]:
+# In[33]:
 
 
 path = input("Enter the path of your CSV_files: ").strip()
@@ -1037,6 +1172,12 @@ for csv_file in sorted(dirs): #sort number first
               georgia_4()
               georgia_5()
               georgia_6()
+       elif file_name.find('race') != -1:
+              race_2()
+              race_3()
+              race_4()
+              race_5()
+
 merge_all()
 print("Done Merging!")
 

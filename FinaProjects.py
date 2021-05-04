@@ -55,6 +55,150 @@ from matplotlib import ticker
 # In[ ]:
 
 
+def race_5():
+    df = pd.read_csv(csv_file)
+    df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+    years = [2019]
+    df = df.loc[df.Year.isin(years)]
+    table_count = df.groupby(df['State'])['Population'].sum()
+    table_count = table_count.sort_values(ascending=False)
+    y = table_count.index
+    x = table_count.values
+    ax = sns.barplot(x = x,y=y,orient='h')
+    #props = dict(boxstyle='round', facecolor='wheat', alpha=0.3)
+    #plt.annotate("EPI", xy=(0.5, 0.5), fontsize=15, xycoords='axes fraction', bbox=props)
+    plt.ylabel('State')
+    plt.xlabel('Population (million)')
+    ax.set_title("2019 Swing States Population")
+    plt.show()
+
+
+# In[ ]:
+
+
+def race_4():
+    while True:
+        df = pd.read_csv(csv_file)
+        df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+        try:
+            years = [int(x) for x in input("Enter a list of year[2010 - 2019] to test: ").split()]
+            df1 = df.loc[df.Year.isin([years[0]])]
+            table_0 = df1.groupby(df['Gender'])['Population'].sum()
+            table_0 = table_0.sort_values(ascending=True)
+            try:
+                df2 = df.loc[df.Year.isin([years[1]])]
+                table_1 = df2.groupby(df['Gender'])['Population'].sum()
+                table_1 = table_1.sort_values(ascending=True)
+            except:
+                pass
+            try:
+                df3 = df.loc[df.Year.isin([years[2]])]
+                table_2 = df3.groupby(df['Gender'])['Population'].sum()
+                table_2 = table_2.sort_values(ascending=True)
+            except:
+                pass
+        except:
+            print(red("Typo! Please try again."))
+            break
+        if len(years) == 1:
+            df4 = pd.DataFrame({years[0]: table_0.values.tolist()}, index=table_0.index.tolist())
+        elif len(years) == 2:  
+            df4 = pd.DataFrame({years[1]: table_1.values.tolist(), years[0]: table_0.values.tolist()}, index=table_1.index.tolist()) 
+        elif len(years) == 3:
+            df4 = pd.DataFrame({years[2]: table_2.values.tolist(), years[1]: table_1.values.tolist(), years[0]: table_2.values.tolist()}, index=table_2.index.tolist()) 
+        df4.plot.barh()
+        plt.xlabel('Population (million)')
+        plt.ylabel('Race')
+        plt.title('Gender By Population')
+        plt.show()
+
+
+# In[ ]:
+
+
+def race_3():
+    while True:
+        df = pd.read_csv(csv_file)
+        df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+        try:
+            years = [int(x) for x in input("Enter a list of year[2010 - 2019] to test: ").split()]
+            df = df.loc[df.Year.isin(years)]
+            df1 = df.loc[df.Year.isin([years[0]])]
+            df1 = df.loc[df.Year.isin([years[0]])]
+            table_0 = df1.groupby(df['Race'])['Population'].sum()
+            table_0 = table_0.sort_values(ascending=True)
+            try:
+                df2 = df.loc[df.Year.isin([years[1]])]
+                table_1 = df2.groupby(df['Race'])['Population'].sum()
+                table_1 = table_1.sort_values(ascending=True)
+            except:
+                pass
+            try:
+                df3 = df.loc[df.Year.isin([years[2]])]
+                table_2 = df3.groupby(df['Race'])['Population'].sum()
+                table_2 = table_2.sort_values(ascending=True)
+            except:
+                pass
+        except:
+            print(red("Typo! Please try again."))
+            break
+        if len(years) == 1:
+            df4 = pd.DataFrame({years[0]: table_0.values.tolist()}, index=table_0.index.tolist())
+        elif len(years) == 2:  
+            df4 = pd.DataFrame({years[1]: table_1.values.tolist(), years[0]: table_0.values.tolist()}, index=table_1.index.tolist()) 
+        elif len(years) == 3:
+            df4 = pd.DataFrame({years[2]: table_2.values.tolist(), years[1]: table_1.values.tolist(), years[0]: table_2.values.tolist()}, index=table_2.index.tolist()) 
+        df4.plot.barh()
+        plt.xlabel('Population (million)')
+        plt.ylabel('Race')
+        plt.title('Race By Population')
+        plt.show()
+
+
+# In[ ]:
+
+
+def race_2():
+    while True:
+        df = pd.read_csv(csv_file)
+        df[['Population']] = df[['Population']] .replace('[\,,]','',regex=True).astype(int)
+        try:
+            years = [int(x) for x in input("Enter a list of year[2010 - 2019] to test: ").split()]
+            df = df.loc[df.Year.isin(years)]
+            df1 = df.loc[df.Year.isin([years[0]])]
+            table_0 = df1.groupby(df['State'])['Population'].sum()
+            table_0 = table_0.sort_values(ascending=True)
+            try:
+                df2 = df.loc[df.Year.isin([years[1]])]
+                table_1 = df2.groupby(df['State'])['Population'].sum()
+                table_1 = table_1.sort_values(ascending=True)
+            except:
+                pass
+            try:
+                df3 = df.loc[df.Year.isin([years[2]])]
+                table_2 = df3.groupby(df['State'])['Population'].sum()
+                table_2 = table_2.sort_values(ascending=True)
+            except:
+                pass
+        except:
+            print(red("Typo! Please try again."))
+            break
+        if len(years) == 1:
+            df4 = pd.DataFrame({years[0]: table_0.values.tolist()}, index=table_0.index.tolist())
+        elif len(years) == 2:  
+            df4 = pd.DataFrame({years[1]: table_1.values.tolist(), years[0]: table_0.values.tolist()}, index=table_1.index.tolist()) 
+        elif len(years) == 3:
+            df4 = pd.DataFrame({years[2]: table_2.values.tolist(), years[1]: table_1.values.tolist(), years[0]: table_2.values.tolist()}, index=table_2.index.tolist()) 
+        df4.plot.barh()
+        plt.xlabel('Population (million)')
+        plt.ylabel('Swing State')
+        plt.title('Swing States By Population')
+        plt.show()
+
+
+# In[ ]:
+
+
 def georgia_6():
     df = pd.read_csv(csv_file)
     columns = ['fact', 'Arizona', 'Georgia', 'South Carolina']
@@ -1040,6 +1184,12 @@ while True:
               "Option 5: Georgia Votes By Race",
               "Option 6: Quick Facts Comparison",
               ]
+       list10 = ["Option 1: Print Data Frame",
+              "Option 2: Swing States By Population",
+              "Option 3: Race By Population",
+              "Option 4: Gender By Population",
+              "Option 5: 2019 Swing States Population",
+              ]
        while True and len(file_name) > 2:
               if file_name.find('CostOf') != -1:
                      print(blue(f"The following options are available for {file_name1}:"))
@@ -1084,6 +1234,11 @@ while True:
               elif file_name.find('Georgia') != -1:
                      print(blue(f"The following options are available for {file_name1}:"))
                      print(*list9,sep='\n')
+                     func = input("Please input the option #: ")
+                     print("")
+              elif file_name.find('race') != -1:
+                     print(blue(f"The following options are available for {file_name1}:"))
+                     print(*list10,sep='\n')
                      func = input("Please input the option #: ")
                      print("")
               
@@ -1165,7 +1320,16 @@ while True:
                      georgia_5()
               elif func == "6" and file_name.find('Georgia') != -1:
                      georgia_6()
-             
+              elif func == "1" and file_name.find('race') != -1:
+                     df()
+              elif func == "2" and file_name.find('race') != -1:
+                     race_2()
+              elif func == "3" and file_name.find('race') != -1:
+                     race_3()
+              elif func == "4" and file_name.find('race') != -1:
+                     race_4()
+              elif func == "5" and file_name.find('race') != -1:
+                     race_5()
               
               plt.show()
               plt.close()
