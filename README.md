@@ -24,9 +24,9 @@
 		![alt text](../Hiep_3rd_Segment/Resources/step5.png)
 		![alt text](../Hiep_3rd_Segment/Resources/step6.png)
 		
-	### Remark: The RMSE (loss function) is lower for Keras Regression model which shows that our prediction is closer to actual.
+	#### Remark: The RMSE (loss function) is lower for Keras Regression model which shows that our prediction is closer to actual.
 		
-	Conclusion: The purpose of neural networks is to find a transformation of a data for making a decision. if we had a large number of vote info as input, along with the vote turnout as output, a neural network could be "trained" on these patterns.
+	### Conclusion: The purpose of neural networks is to find a transformation of a data for making a decision. if we had a large number of vote info as input, along with the vote turnout as output, a neural network could be "trained" on these patterns.
  
 ## Summary
   - Easily access [Our Website](https://predictsenate.anvil.app/) and [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) from anywhere–computer, tablet, or phone.
