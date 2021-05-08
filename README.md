@@ -4,7 +4,7 @@
 
 ## Challenge
 - Deep learning step by step to predict percentage of vote turn out from [epi.csv](../Hiep_3rd_Segment/Resources/epi.csv). Refer to [EPI_NeuraulNetwork.ipynb](../Hiep_3rd_Segment/Machine_Learning/epi_nn.ipynb) for details.
-	- Step 1: Read the data:
+	- Step 1: Read and clean the data:
 	![alt text](../Hiep_3rd_Segment/Resources/data.png)
 	- Step 1: Exploratory Data Analysis, calculate the coefficient of determination, and Predict:
 	![alt text](../Hiep_3rd_Segment/Resources/step.png)
