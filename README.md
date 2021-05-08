@@ -3,4 +3,4 @@
 - Furthermore, deploy deep learning neural network model to analyze Senate dataset, and directly plot all the graphs on the web app. Refer to [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) for details.
 
 ## Challenge
-- 
+- Depp learning neural network model step by step:
