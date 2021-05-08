@@ -14,7 +14,7 @@
 	- Step 2: Dataset Preparation (Splitting and Scaling)
 		- Input (X): The columns that are inserted into our model will be used to make predictions.
 		- Prediction (y = vep_turnout): Target variable that will be predicted by the input.
-		![alt text](../Hiep_3rd_Segment/Resources/stepP.png
+		![alt text](../Hiep_3rd_Segment/Resources/stepP.png)
 	- Step 3: Using Keras Regressions Model
 		- The model will run in both train and test data along with calculating the loss function.
 		![alt text](../Hiep_3rd_Segment/Resources/step8.png)
