@@ -30,6 +30,6 @@
  
 ## Summary
   - Easily access [Our Website](https://predictsenate.anvil.app/) and [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) from anywhere–computer, tablet, or phone.
-  - Create pie charts, graphs, interactive maps, and more with just a few clicks.
+  - Create pie charts, graphs, interactive maps, Deep learning and more with just a few clicks.
 	
   
