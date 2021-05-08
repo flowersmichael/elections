@@ -24,7 +24,7 @@
     - calculated the r2_score due to R2 is suitable for predicting continuous variable. A higher r-squared indicates a better fit for the model.
     ![alt text](../Hiep_3rd_Segment//Resources/step6.png)
     
-    Conclusions: The purpose of neural networks is to find a transformation of a data for making a decision. We built a model that predicts voter preferences. How do we forecast the outcome of an election.
+    Conclusions: The purpose of neural networks is to find a transformation of a data for making a decision. We built a model that predicts total votes preferences. How do we forecast the outcome of an election.
    
  
 ## Summary
