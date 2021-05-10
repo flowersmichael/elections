@@ -23,6 +23,8 @@ While this influx of cash gives campaigns the flexibility to spend in ways and a
 So, we want to examine not only to what degree campaign spending influences election outcomes, but also what types of spending are most effective. In particular we are looking closely at support ads versus opposition ads.
 
 
+
+
 ## Data Sources
 
 We rely primarily on four general data sources for the project.
@@ -55,6 +57,42 @@ Additionally, we will be communicating regularly via our group Slack channel, an
 
 ![Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
 
+# elections
+
+Link to presentation: https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit#slide=id.gd85dd7db60_0_6
+
+--1. combine demographics, population and voter turnout
+-- `All_State_Demographics` table is not working!
+WITH demo AS(
+SELECT All_State_Demographics.Year,
+	   State,
+	   Race
+FROM postgres.public.All_State_Demographics)
+
+SELECT year,
+	   state_fips AS State,
+	   vep_turnout
+FROM epi AS e
+INNER JOIN demo AS d ON d.Year = e.year 
+AND d.LOWER(state) = e.LOWER(state) 
+
+--2. opposition or support spending on advertising and victory (i think this would be EPI and FEC data)
+WITH electresults AS (
+SELECT state_po AS state,
+	   _year AS year,
+	   senate_model.Results
+FROM senate_model
+)
+
+SELECT cand_office_state AS State,
+	   report_year AS Year,
+	   support_oppose_indicator AS S_or_O,
+	   SUM(expenditure_amount) AS expenditure_amount,
+	   CASE WHEN results = 1 THEN 'Win' ELSE 'Lose' END
+FROM fec_independent_expenditures_original AS f
+INNER JOIN electresults AS r on _state = cand_office_state AND _year = report_year 
+GROUP BY cand_office_state, S_or_O, year
+ORDER BY Cand_office_state, year
 
 ## Second Segment Project Deliverable
 - Wrote another python script that runs through all csv files, analyzes all of them, process everything, then save the results in pdf file, and finally merge all pdf files into ONE pdf file for easily review. Everything is just one click. Refer to [AutoTest.ipynb](../hiep/AutoTest.ipynb), [AutoTest.py](../hiep/AutoTest.py), and [AutoTest Video](../hiep/AutoTest.m4v) for your reference.
