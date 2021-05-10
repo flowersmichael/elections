@@ -57,7 +57,6 @@ Additionally, we will be communicating regularly via our group Slack channel, an
 
 ![Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
 
-<<<<<<< blake
 # elections
 
 Link to presentation: https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit#slide=id.gd85dd7db60_0_6
@@ -119,6 +118,3 @@ ORDER BY Cand_office_state, year
 - A single python script that runs through all csv files, analyzes all of them, process everything, and finally merge all test results into ONE pdf file for easily review. Refer to [Elections Result PDF File](../hiep/Results_Elections.pdf) for your reference.
 - Here is our Storyboard with details and descriptions on Google Slide(s): [Group 5 Storyboard](https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit?ts=60823a15#slide=id.gd441bd4197_0_6)
 - Finally, deploy machine learning model on the website: [2022 senate elections predictions](https://group5.anvil.app/) & [WebApp Video](../hiep/WebApp.m4v)
-
-
-

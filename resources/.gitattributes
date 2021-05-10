@@ -1,0 +1,11 @@
+1976-2020-president.csv filter=lfs diff=lfs merge=lfs -text
+1976-2020-senate.csv filter=lfs diff=lfs merge=lfs -text
+2012.csv filter=lfs diff=lfs merge=lfs -text
+2020[[:space:]]November[[:space:]]General[[:space:]]Election[[:space:]]-[[:space:]]Turnout[[:space:]]Rates.csv filter=lfs diff=lfs merge=lfs -text
+all_house_senate_2010.csv filter=lfs diff=lfs merge=lfs -text
+all_house_senate_2014.csv filter=lfs diff=lfs merge=lfs -text
+all_house_senate_2016.csv filter=lfs diff=lfs merge=lfs -text
+archive[[:space:]](7).zip filter=lfs diff=lfs merge=lfs -text
+[[:space:]]fec-independent-expenditures.csv filter=lfs diff=lfs merge=lfs -text
+idea_export_table_60773dc797fe3.xls filter=lfs diff=lfs merge=lfs -text
+independent_expenditures_2004-2020.csv filter=lfs diff=lfs merge=lfs -text
