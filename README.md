@@ -47,12 +47,6 @@ For competitive campaigns, how much does each additional dollar spent by campaig
 Does this asset allocation prescription vary by subgroups of U.S. states with similar demographic profiles?
 
 
-## Team Communication
-
-Outside of the Tuesday and Thursday night classes, we will meet over video conference at least once per week to coordinate and plan.
-
-Additionally, we will be communicating regularly via our group Slack channel, and group text as well.
-
 ## Outline
 
 ![Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
