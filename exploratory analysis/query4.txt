@@ -1,0 +1,54 @@
+` CREATE TABLE public.fec_independent_expenditures
+(
+    committee_id character varying COLLATE pg_catalog."default",
+    committee_name character varying COLLATE pg_catalog."default",
+    report_year integer,
+    report_type integer,
+    image_number integer,
+    file_number integer,
+    payee_name character varying COLLATE pg_catalog."default",
+    payee_street_1 character varying COLLATE pg_catalog."default",
+    payee_street_2 character varying COLLATE pg_catalog."default",
+    payee_city character varying COLLATE pg_catalog."default",
+    payee_state character varying COLLATE pg_catalog."default",
+    payee_zip integer,
+    expenditure_description character varying COLLATE pg_catalog."default",
+    expenditure_date date,
+    dissemination_date date,
+    expenditure_amount numeric,
+    office_total_ytd numeric,
+    category_code integer,
+    category_code_full character varying COLLATE pg_catalog."default",
+    support_oppose_indicator character varying COLLATE pg_catalog."default",
+    candidate_id character varying COLLATE pg_catalog."default",
+    candidate_name character varying COLLATE pg_catalog."default",
+    candidate_prefix character varying COLLATE pg_catalog."default",
+    candidate_first_name character varying COLLATE pg_catalog."default",
+    candidate_middle_name character varying COLLATE pg_catalog."default",
+    candidate_last_name character varying COLLATE pg_catalog."default",
+    candidate_suffix character varying COLLATE pg_catalog."default",
+    candidate_office character varying COLLATE pg_catalog."default",
+    cand_office_state character varying COLLATE pg_catalog."default",
+    cand_office_district integer,
+    conduit_committee_id character varying COLLATE pg_catalog."default",
+    election_type character varying COLLATE pg_catalog."default",
+    election_type_full character varying COLLATE pg_catalog."default",
+    transaction_id character varying COLLATE pg_catalog."default" NOT NULL,
+    original_sub_id integer NOT NULL,
+    action_code character varying COLLATE pg_catalog."default",
+    action_code_full character varying COLLATE pg_catalog."default",
+    schedule_type_full character varying COLLATE pg_catalog."default",
+    filing_form character varying COLLATE pg_catalog."default",
+    link_id character varying COLLATE pg_catalog."default",
+    sub_id character varying COLLATE pg_catalog."default",
+    is_notice character varying COLLATE pg_catalog."default",
+    schedule_type character varying COLLATE pg_catalog."default",
+    pdf_url character varying COLLATE pg_catalog."default",
+    CONSTRAINT fec_independent_expenditures_pkey PRIMARY KEY (transaction_id, original_sub_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+ALTER TABLE public.fec_independent_expenditures
+    OWNER to postgres; `
