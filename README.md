@@ -55,6 +55,7 @@ https://predictsenate.anvil.app/
 ### Link to web app:
 https://share.streamlit.io/hieppham8083/finalproject/main/main.py
 
+
 ## Key Tools
 
 Hiep wrote a Python script that, in just one click:
@@ -64,8 +65,6 @@ Hiep wrote a Python script that, in just one click:
 4. Saves the results in pdf file, and finally 
 5. Merge all pdf files into ONE pdf file for easy review. 
 
-Hiep also 
-
 For your reference:
 
 [AutoTest.ipynb](../hiep/AutoTest.ipynb),
@@ -73,9 +72,22 @@ For your reference:
 [AutoTest Video](../hiep/AutoTest.m4v)
 [Elections Result PDF File](../hiep/Results_Elections.pdf)
 
+Hiep also wrote a Python script to store data to SQL_database. This script also creates an ERD with relationships.
 
-## Machine Learning
+For your reference:
 
+[Dataframe_to_sql.ipynb](../hiep/Dataframe_to_sql.ipynb) and 
+[Video](../hiep/SQL_database.m4v)
+
+[ERD](../hiep/ERD.png) and 
+[Video](../hiep/SQL_ERD.m4v)
+
+
+
+## Machine Learning Results
+
+
+### Previous U.S. Senate Election Results Model
 Hiep also built Machine Learning models that work directly with the data in the SQL database. These models apply Machine Learning to analyze: [senate_dataset.csv](../hiep/Resources/senate_dataset.csv)
 
 Process:
@@ -89,8 +101,10 @@ Process:
 
 4. Test the prediction. Refer to the following:
 [senate_prediction.ipynb](../hiep/Senate_prediction.ipynb)
-[Video](../hiep/Senate_Prediction.m4v) for details.
+[Video](../hiep/Senate_Prediction.m4v)
 
+
+### Independent Expenditures Model
 Hiep also applied a deep-learning neural networks model to analyze:
 [independent_expenditures.csv](../hiep/Resources/independent_expenditures_2004-2020.csv.zip)
 
@@ -104,45 +118,47 @@ Process:
 3. Use neural networks model with 2 hidden layers to train the model. Refer to test result below:
 ![alt text](../hiep/independent_expenditures_2020.png)
 
+4. Finally, deploy machine learning model on the website: 
+[2022 senate elections predictions](https://group5.anvil.app/)
+[WebApp Video](../hiep/WebApp.m4v)
 
 
+### Turnout Model
+Hiep also deployed a deep learning NeuralNetwork model to analyze vote turnout from [Elections Performance Index Dataset](../Hiep_3rd_Segment/Resources/epi.csv) and directly plot all the graphs on the web app. Refer to [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) for details. The model also predicts percentage of vote turn out from [epi.csv](../Hiep_3rd_Segment/Resources/epi.csv). Refer to [EPI_NeuraulNetwork.ipynb](../Hiep_3rd_Segment/Machine_Learning/epi_nn.ipynb) for details.
 
-- Finally, deploy machine learning model on the website: [2022 senate elections predictions](https://group5.anvil.app/) & [WebApp Video](../hiep/WebApp.m4v)
+Process:
+1. Read and clean the data:
+![alt text](../Hiep_3rd_Segment/Resources/data.png)
 
-## Third Segment Project Deliverable
+2. Exploratory data analysis, calculating the coefficient of determination, and prediction:
+![alt text](../Hiep_3rd_Segment/Resources/step.png)
+![alt text](../Hiep_3rd_Segment/Resources/step1.png)
+![alt text](../Hiep_3rd_Segment/Resources/step2.png)
+![alt text](../Hiep_3rd_Segment/Resources/step3.png)
 
-- Deploy machine learning model to the website for predicting the total votes and who will win the elections, also created the dashboard visualization for elections test results. Refer to [Our Website](https://predictsenate.anvil.app/) for details.
-- Furthermore, deploy deep learning NeuralNetwork model to analyze vote turn out from [Elections Performance Index Dataset](../Hiep_3rd_Segment/Resources/epi.csv) and directly plot all the graphs on the web app. Refer to [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) for details.
-
-## Challenge
-- Deep learning step by step to predict percentage of vote turn out from [epi.csv](../Hiep_3rd_Segment/Resources/epi.csv). Refer to [EPI_NeuraulNetwork.ipynb](../Hiep_3rd_Segment/Machine_Learning/epi_nn.ipynb) for details.
-	- Step 1: Read and clean the data:
-	![alt text](../Hiep_3rd_Segment/Resources/data.png)
-	- Step 2: Exploratory Data Analysis, calculate the coefficient of determination, and Prediction:
-	![alt text](../Hiep_3rd_Segment/Resources/step.png)
-	![alt text](../Hiep_3rd_Segment/Resources/step1.png)
-	![alt text](../Hiep_3rd_Segment/Resources/step2.png)
-	![alt text](../Hiep_3rd_Segment/Resources/step3.png)
-	- Step 3: Dataset Preparation (Splitting and Scaling)
-		- Input (X): The columns that are inserted into our model will be used to make predictions.
-		- Prediction (y = vep_turnout): Target variable that will be predicted by the input.
-		![alt text](../Hiep_3rd_Segment/Resources/stepP.png)
-	- Step 4: Using Keras Regressions Model
-		- The model will run in both train and test data along with calculating the loss function.
-		![alt text](../Hiep_3rd_Segment/Resources/step8.png)
-		![alt text](../Hiep_3rd_Segment/Resources/step4.png)
-	- Step 5: Evaluation on Test Data and calculate the R²_score to quantify the model’s performance. 
-		![alt text](../Hiep_3rd_Segment/Resources/step7.png)
-		![alt text](../Hiep_3rd_Segment/Resources/step5.png)
-		![alt text](../Hiep_3rd_Segment/Resources/step6.png)
+3. Dataset Preparation (Splitting and Scaling)
+Input (X): The columns that are inserted into our model will be used to make predictions.
+Prediction (Y = vep_turnout): Target variable that will be predicted by the input.
+![alt text](../Hiep_3rd_Segment/Resources/stepP.png)
+	
+4. Using Keras Regressions Model:
+The model will run in both train and test data along with calculating the loss function.
+![alt text](../Hiep_3rd_Segment/Resources/step8.png)
+![alt text](../Hiep_3rd_Segment/Resources/step4.png)
+	
+5. Evaluation on Test Data and calculate the R²_score to quantify the model’s performance. 
+![alt text](../Hiep_3rd_Segment/Resources/step7.png)
+![alt text](../Hiep_3rd_Segment/Resources/step5.png)
+![alt text](../Hiep_3rd_Segment/Resources/step6.png)
 		
-	#### Remark: The RMSE (loss function) is lower for Keras Regression model which shows that our prediction is closer to actual.
+*Remark: The RMSE (loss function) is lower for Keras Regression model which shows that our prediction is closer to actual.
+
 		
-	### Conclusion: The purpose of neural networks is to find a transformation of a data for making a decision. if we had a large number of vote info as input, along with the vote turnout as output, a neural network could be "trained" on these patterns.
+### Machine Learning Conclusion
+
+The purpose of neural networks is to find a transformation of a data for making a decision. If we had a large number of vote info as input, along with the vote turnout as output, a neural network could be "trained" on these patterns.
  
 ## Summary
-  - Easily access [Our Website](https://predictsenate.anvil.app/) and [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) from anywhere–computer, tablet, or phone.
-  - Create pie charts, graphs, interactive maps, Deep learning and more with just a few clicks.
-	
-  
+Easily access [Our Website](https://predictsenate.anvil.app/) and [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) from anywhere–computer, tablet, or phone.
 
+Create pie charts, graphs, interactive maps, Deep learning and more with just a few clicks.
