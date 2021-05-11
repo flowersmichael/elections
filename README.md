@@ -22,9 +22,6 @@ While this influx of cash gives campaigns the flexibility to spend in ways and a
 
 So, we want to examine not only to what degree campaign spending influences election outcomes, but also what types of spending are most effective. In particular we are looking closely at support ads versus opposition ads.
 
-
-
-
 ## Data Sources
 
 We rely primarily on four general data sources for the project.
@@ -39,81 +36,81 @@ Our final dataset is from the Elections Performance Index. The Elections Perform
 
 We hypothesize that focused campaign spending on competitive races in states with turnout levels that, relative to other states, show room for significant improvement, is money well spent.
 
-
 ## Questions to Answer
 
 For competitive campaigns, how much does each additional dollar spent by campaigns relative to other campaigns impact the candidate's win probability?
 
 Does this asset allocation prescription vary by subgroups of U.S. states with similar demographic profiles?
 
+## Key Links
 
-## Outline
+### Link to Google Slides presentation, including Storyboard: https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit#slide=id.gd85dd7db60_0_6
 
-![Outline](https://github.com/flowersmichael/elections/blob/mike/Resources/Initial%20Outline.png)
+### Link to Tableau dashboard:
+https://public.tableau.com/profile/jason6879#!/vizhome/SenateRace_16205139382310/Dashboard1?publish=yes
 
-# elections
+### Link to website:
+https://predictsenate.anvil.app/
 
-Link to presentation: https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit#slide=id.gd85dd7db60_0_6
+### Link to web app:
+https://share.streamlit.io/hieppham8083/finalproject/main/main.py
 
---1. combine demographics, population and voter turnout
--- `All_State_Demographics` table is not working!
-WITH demo AS(
-SELECT All_State_Demographics.Year,
-	   State,
-	   Race
-FROM postgres.public.All_State_Demographics)
+## Key Tools
 
-SELECT year,
-	   state_fips AS State,
-	   vep_turnout
-FROM epi AS e
-INNER JOIN demo AS d ON d.Year = e.year 
-AND d.LOWER(state) = e.LOWER(state) 
+Hiep wrote a Python script that, in just one click:
+1. Reads in csv files, 
+2. Analyzes the file, 
+3. Processes everything, 
+4. Saves the results in pdf file, and finally 
+5. Merge all pdf files into ONE pdf file for easy review. 
 
---2. opposition or support spending on advertising and victory (i think this would be EPI and FEC data)
-WITH electresults AS (
-SELECT state_po AS state,
-	   _year AS year,
-	   senate_model.Results
-FROM senate_model
-)
+Hiep also 
 
-SELECT cand_office_state AS State,
-	   report_year AS Year,
-	   support_oppose_indicator AS S_or_O,
-	   SUM(expenditure_amount) AS expenditure_amount,
-	   CASE WHEN results = 1 THEN 'Win' ELSE 'Lose' END
-FROM fec_independent_expenditures_original AS f
-INNER JOIN electresults AS r on _state = cand_office_state AND _year = report_year 
-GROUP BY cand_office_state, S_or_O, year
-ORDER BY Cand_office_state, year
+For your reference:
 
-## Second Segment Project Deliverable
-- Wrote another python script that runs through all csv files, analyzes all of them, process everything, then save the results in pdf file, and finally merge all pdf files into ONE pdf file for easily review. Everything is just one click. Refer to [AutoTest.ipynb](../hiep/AutoTest.ipynb), [AutoTest.py](../hiep/AutoTest.py), and [AutoTest Video](../hiep/AutoTest.m4v) for your reference.
+[AutoTest.ipynb](../hiep/AutoTest.ipynb),
+[AutoTest.py](../hiep/AutoTest.py), and
+[AutoTest Video](../hiep/AutoTest.m4v)
+[Elections Result PDF File](../hiep/Results_Elections.pdf)
 
-## Challenge
-- Build/run Machine Learning models where data stays in the database with SQL:
-  - Apply machine learning to analyze from [senate_dataset.csv](../hiep/Resources/senate_dataset.csv):
-    - First connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
-  ![alt text](../hiep/senate_from_SQL.png)
-    - Completed data cleaning, rescale data, then apply neural networks model to train model. Refer to [senate_model.ipynb](../hiep/senate_model.ipynb).
-    - Also predict the Senate's total votes for each state and predict who will win next election, and finally test the prediction. Refer to [senate_prediction.ipynb](../hiep/Senate_prediction.ipynb) and [Video](../hiep/Senate_Prediction.m4v) for details.
-  - Apply deep-learning neural networks model to analyze from [independent_expenditures.csv](../hiep/Resources/independent_expenditures_2004-2020.csv.zip):
-    - First connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
-  ![alt text](../hiep/fec_independent_expenditures_from_SQL.png)
-    - Completed data cleaning, decomposed data, then rescale data. Refer to [fec_independent_expenditures.ipynb](../hiep/fec_independent_expenditures_model.ipynb).
-    - Using neural networks model with 2 hidden layers to train the model. Refer to test result below:
-  ![alt text](../hiep/independent_expenditures_2020.png)
-- Created a SQL database to store data:
-  - Wrote a script to store data to SQL_database. Refer to [Dataframe_to_sql.ipynb](../hiep/Dataframe_to_sql.ipynb) and [Video](../hiep/SQL_database.m4v) for details.
-  - Also create a ERD with relationships. Refer to [ERD](../hiep/ERD.png) and [Video](../hiep/SQL_ERD.m4v) for details.
- 
-## Summary
-- A single python script that runs through all csv files, analyzes all of them, process everything, and finally merge all test results into ONE pdf file for easily review. Refer to [Elections Result PDF File](../hiep/Results_Elections.pdf) for your reference.
-- Here is our Storyboard with details and descriptions on Google Slide(s): [Group 5 Storyboard](https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit?ts=60823a15#slide=id.gd441bd4197_0_6)
+
+## Machine Learning
+
+Hiep also built Machine Learning models that work directly with the data in the SQL database. These models apply Machine Learning to analyze: [senate_dataset.csv](../hiep/Resources/senate_dataset.csv)
+
+Process:
+1. First, connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
+![alt text](../hiep/senate_from_SQL.png)
+  
+2. Clean and rescale the data, then apply neural networks model to train model. Refer to:
+[senate_model.ipynb](../hiep/senate_model.ipynb)
+
+3. Predict the Senate's total votes for each state, and predict who will win next election.
+
+4. Test the prediction. Refer to the following:
+[senate_prediction.ipynb](../hiep/Senate_prediction.ipynb)
+[Video](../hiep/Senate_Prediction.m4v) for details.
+
+Hiep also applied a deep-learning neural networks model to analyze:
+[independent_expenditures.csv](../hiep/Resources/independent_expenditures_2004-2020.csv.zip)
+
+Process:
+1. First connect to PostgreSQL Database and read the DataFrame. Refer to test result below:
+![alt text](../hiep/fec_independent_expenditures_from_SQL.png)
+
+2. Completed data cleaning, then decomposed and rescale the data. Refer to: 
+[fec_independent_expenditures.ipynb](../hiep/fec_independent_expenditures_model.ipynb)
+
+3. Use neural networks model with 2 hidden layers to train the model. Refer to test result below:
+![alt text](../hiep/independent_expenditures_2020.png)
+
+
+
+
 - Finally, deploy machine learning model on the website: [2022 senate elections predictions](https://group5.anvil.app/) & [WebApp Video](../hiep/WebApp.m4v)
 
 ## Third Segment Project Deliverable
+
 - Deploy machine learning model to the website for predicting the total votes and who will win the elections, also created the dashboard visualization for elections test results. Refer to [Our Website](https://predictsenate.anvil.app/) for details.
 - Furthermore, deploy deep learning NeuralNetwork model to analyze vote turn out from [Elections Performance Index Dataset](../Hiep_3rd_Segment/Resources/epi.csv) and directly plot all the graphs on the web app. Refer to [Our WebApp](https://share.streamlit.io/hieppham8083/finalproject/main/main.py) for details.
 
