@@ -1,5 +1,8 @@
 # U.S. Senate Campaign Spending Analysis
 
+## Google Slides Link
+Presentation Link: https://docs.google.com/presentation/d/1E93kYEQFJNGIZQmk9z00w1K3CHVzehhQ3yrYlhuCUcg/edit#slide=id.gd9f4fc46b6_0_0
+
 ## Topic
 
 For our final group project, we are examining the relationship between how much money is spent by United States Senate campaigns, how the campaigns spend their money, and the success of these campaigns. How and to what extent does money affect elections?
